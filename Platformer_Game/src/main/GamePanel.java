@@ -10,7 +10,8 @@ import inputs.MouseInputs;
 public class GamePanel extends JPanel{
 
 	private MouseInputs mouseInputs;
-	private int xDelta = 100, yDelta = 100;
+	private float xDelta = 100, yDelta = 100;
+	private float xDir = 2f, yDir = 2f;
 	
 	public GamePanel() {
 		
@@ -41,7 +42,20 @@ public class GamePanel extends JPanel{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		g.fillRect(xDelta, yDelta, 100, 100);
+		updateRectangle();
+		g.fillRect((int) xDelta, (int) yDelta, 100, 100);
+		
+	
+	}
+
+	private void updateRectangle() {
+		xDelta += xDir;
+		if(xDelta > 600 || xDelta < 0)
+			xDir*=-1;
+		yDelta += yDir;
+		if(yDelta > 400 || yDelta < 0)
+			yDir*=-1;
+		
 	}
 	
 }
