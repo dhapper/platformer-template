@@ -3,46 +3,40 @@ package inputs;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import entities.Player;
 import main.GamePanel;
 
-public class KeyboardInputs implements KeyListener{
-	
-	private GamePanel gamePanel;
-	
-	public KeyboardInputs(GamePanel gamePanel) {
-		this.gamePanel = gamePanel;
-	}
+public class KeyboardInputs implements KeyListener {
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    private GamePanel gamePanel;
+    private Player player;
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		
-		switch(e.getKeyCode()) {
-		case KeyEvent.VK_W:
-			gamePanel.changeYDelta(-5);
-			break;
-		case KeyEvent.VK_A:
-			gamePanel.changeXDelta(-5);
-			break;
-		case KeyEvent.VK_S:
-			gamePanel.changeYDelta(5);
-			break;
-		case KeyEvent.VK_D:
-			gamePanel.changeXDelta(5);
-			break;
-		}
-		
-	}
+    public KeyboardInputs(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+        this.player = gamePanel.getGame().getPlayer();
+    }
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void keyTyped(KeyEvent e) {}
 
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch(e.getKeyCode()) {
+            case KeyEvent.VK_W -> player.setUpPressed(true);
+            case KeyEvent.VK_A -> player.setLeftPressed(true);
+            case KeyEvent.VK_S -> player.setDownPressed(true);
+            case KeyEvent.VK_D -> player.setRightPressed(true);
+            case KeyEvent.VK_H -> player.setHit(true);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        switch(e.getKeyCode()) {
+            case KeyEvent.VK_W -> player.setUpPressed(false);
+            case KeyEvent.VK_A -> player.setLeftPressed(false);
+            case KeyEvent.VK_S -> player.setDownPressed(false);
+            case KeyEvent.VK_D -> player.setRightPressed(false);
+        }
+    }
 }

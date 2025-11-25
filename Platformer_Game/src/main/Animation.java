@@ -14,6 +14,9 @@ public class Animation {
 	private BufferedImage sprites[];
 	private int currentFrame = 0;
 	
+	private boolean animationEnded = false;
+	private boolean isFirstFrame = true;
+	
 	public Animation (String path, int frames) {
 		
 		this.frames = frames;
@@ -58,10 +61,23 @@ public class Animation {
 		return currentFrame;
 	}
 	
+	public boolean isAnimationEnded(){
+		if(!isFirstFrame && currentFrame == 0)
+			return true;
+		return false;
+	}
+	
 	public void nextFrame() {
 		currentFrame++;
 		if(currentFrame >= frames)
 			currentFrame = 0;
+		isFirstFrame = false;
 	}
+	
+	public void reset() {
+	    currentFrame = 0;
+	    isFirstFrame = true;
+	}
+
 
 }
