@@ -2,16 +2,28 @@ package utilz;
 
 public class Constants {
 	
+	
+	public static class General {
+		public static final float Scale = 4.0f;
+	}
+	
 	public static class Directions {
 		public static final int UP = 0;
 		public static final int DOWN = 1;
 		public static final int LEFT = 2;
 		public static final int RIGHT = 3;
 	}
+	
+	public static class TileConstants {
+		public static final int DefaultTerrainTileSize = 16;
+		public static final int TerrainTileSize = (int) (DefaultTerrainTileSize * General.Scale);
+	}
 
 	
 	public static class ResourcePaths {
 		public static final String MainCharacters = "/Pixel Adventure Assets/Main Characters/";
+		public static final String Tiles = "/Pixel Adventure Assets/Terrain/Terrain (16x16).png";
+		public static final String Background = "/Pixel Adventure Assets/Background/";
 	
 		
 	}

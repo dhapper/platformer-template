@@ -12,6 +12,7 @@ public class Game implements Runnable{
 	private final int FPS_SET = 120;
 	private final int UPS_SET = 200;
 	
+	private LevelManager levelManager;
 	private Player player;
 	
 	public Game() {
@@ -25,7 +26,8 @@ public class Game implements Runnable{
 	}
 	
 	private void initClasses() {
-		player = new Player(200, 200);
+		player = new Player(50, 50);
+		levelManager = new LevelManager(this);
 		
 	}
 
@@ -42,6 +44,7 @@ public class Game implements Runnable{
 	
 	public void render(Graphics g) {
 		player.render(g);
+		levelManager.render(g);
 	}
 
 	@Override
