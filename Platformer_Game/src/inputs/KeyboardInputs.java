@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 
 import entities.Player;
 import main.GamePanel;
+import main.LevelManager;
 
 public class KeyboardInputs implements KeyListener {
 
@@ -26,7 +27,9 @@ public class KeyboardInputs implements KeyListener {
             case KeyEvent.VK_A -> player.setLeftPressed(true);
             case KeyEvent.VK_S -> player.setDownPressed(true);
             case KeyEvent.VK_D -> player.setRightPressed(true);
-            case KeyEvent.VK_H -> player.setHit(true);
+            case KeyEvent.VK_I -> player.setHit(true);
+            case KeyEvent.VK_H -> LevelManager.SHOW_HITBOXES = !LevelManager.SHOW_HITBOXES;
+            
         }
     }
 

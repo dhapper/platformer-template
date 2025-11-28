@@ -1,11 +1,13 @@
 package entities;
 
 import main.Animation;
-
+import main.LevelManager;
 import utilz.Constants;
 import utilz.Constants.CharacterAnimations.Paths;
+import utilz.HelperMethods;
 
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import static utilz.Constants.General.*;
@@ -52,27 +54,53 @@ public class Player extends Entity{
 		        isHit = false; // Animation finished
 		    }
 		}
-
-		
 		
 	}
 	
 	public void render(Graphics g) {
 		g.drawImage(anims[currentAnimation].getCurrentSprite(), (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), 64, 64, null);
 		
-		drawHitbox(g);
+		if(LevelManager.SHOW_HITBOXES) { drawHitbox(g); }
 	}
-	
+
 	public void updatePos() {
 
-	    if (upPressed)    y -= speed;
-	    if (downPressed)  y += speed;
-	    if (leftPressed)  x -= speed;
-	    if (rightPressed) x += speed;
-	    
-	    
-	    hitbox.x = x;
-	    hitbox.y = y;
+	    float newX = hitbox.x;
+	    float newY = hitbox.y;
+
+	    // --- Vertical movement ---
+	    if (upPressed) {
+	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x, hitbox.y - speed, hitbox.width, hitbox.height);
+	        if (HelperMethods.CanMoveHere(future, entities)) {
+	            newY -= speed;
+	        }
+	    }
+
+	    if (downPressed) {
+	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x, hitbox.y + speed, hitbox.width, hitbox.height);
+	        if (HelperMethods.CanMoveHere(future, entities)) {
+	            newY += speed;
+	        }
+	    }
+
+	    // --- Horizontal movement ---
+	    if (leftPressed) {
+	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x - speed, newY, hitbox.width, hitbox.height);
+	        if (HelperMethods.CanMoveHere(future, entities)) {
+	            newX -= speed;
+	        }
+	    }
+
+	    if (rightPressed) {
+	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x + speed, newY, hitbox.width, hitbox.height);
+	        if (HelperMethods.CanMoveHere(future, entities)) {
+	            newX += speed;
+	        }
+	    }
+
+	    // --- Apply movement ---
+	    hitbox.x = newX;
+	    hitbox.y = newY;
 	}
 
 	private void updateAnimationTick() {

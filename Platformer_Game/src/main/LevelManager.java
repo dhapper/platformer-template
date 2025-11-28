@@ -7,6 +7,8 @@ import entities.Entity;
 
 public class LevelManager {
 	
+	public static boolean SHOW_HITBOXES = false;
+	
 	private Game game;
 	private MapManager mapManager;
 	

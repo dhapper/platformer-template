@@ -83,7 +83,7 @@ public class MapManager {
 	        				(int) currentTile.getHitbox().width,
 	        				(int) currentTile.getHitbox().height,
 	        				null);
-	        		currentTile.drawHitbox(g);
+	        		if(LevelManager.SHOW_HITBOXES) { currentTile.drawHitbox(g); }
 	        	}
 	        }
 	    }
