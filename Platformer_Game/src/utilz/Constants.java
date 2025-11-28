@@ -4,7 +4,7 @@ public class Constants {
 	
 	
 	public static class General {
-		public static final float Scale = 4.0f;
+		public static final float SCALE = 4.0f;
 	}
 	
 	public static class Directions {
@@ -15,16 +15,15 @@ public class Constants {
 	}
 	
 	public static class TileConstants {
-		public static final int DefaultTerrainTileSize = 16;
-		public static final int TerrainTileSize = (int) (DefaultTerrainTileSize * General.Scale);
+		public static final int DEFAULT_TERRAIN_TILE_SIZE = 16;
+		public static final int TERRAIN_TILE_SIZE = (int) (DEFAULT_TERRAIN_TILE_SIZE * General.SCALE);
 	}
-
+	
 	
 	public static class ResourcePaths {
-		public static final String MainCharacters = "/Pixel Adventure Assets/Main Characters/";
-		public static final String Tiles = "/Pixel Adventure Assets/Terrain/Terrain (16x16).png";
-		public static final String Background = "/Pixel Adventure Assets/Background/";
-	
+		public static final String MAIN_CHARACTERS = "/Pixel Adventure Assets/Main Characters/";
+		public static final String TILES = "/Pixel Adventure Assets/Terrain/Terrain (16x16).png";
+		public static final String BACKGROUND = "/Pixel Adventure Assets/Background/";
 		
 	}
 	

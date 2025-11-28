@@ -34,28 +34,6 @@ public class GamePanel extends JPanel{
 		addMouseMotionListener(mouseInputs);
 	}
 
-	private void importImg() {
-		
-		String[] actions = {};
-		
-		String path = "/Pixel Adventure Assets/Main Characters/Mask Dude/Idle (32x32).png";
-		InputStream is = getClass().getResourceAsStream(path);
-		
-		try {
-			BufferedImage img = ImageIO.read(is);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
 	private void setPanelSize() {
 		Dimension size = new Dimension(1280, 800);
 		setMinimumSize(size);
