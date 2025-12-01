@@ -29,12 +29,14 @@ public class Player extends Entity{
 	
 	private ArrayList<Entity> entities;
 	
-	// Physics
-	private float velY = 0;
-	private float gravity = 0.3f;
-	private float maxFallSpeed = 4f;
-
-	private boolean onGround = false;
+//	// Physics
+//	private float velY = 0;
+//	private float gravity = 0.3f;
+//	private float maxFallSpeed = 3f;
+//
+//	private boolean onGround = false;
+	
+	private Physics physics;
 
 
 	public Player(float x, float y) {
@@ -49,12 +51,17 @@ public class Player extends Entity{
 		
 		initHitbox(x, y, hitboxWidth, hitboxHeight);
 		loadAnims();
+		
+		physics = new Physics();
 	}
 
 	public void update() {
-		onGround = checkIfOnGround();
 		
-		applyGravity();
+		physics.update(hitbox, entities);
+		
+//		onGround = checkIfOnGround();
+//		
+//		applyGravity();
 		
 		updatePos();
 		
@@ -75,13 +82,13 @@ public class Player extends Entity{
 		if(LevelManager.SHOW_HITBOXES) { drawHitbox(g); }
 	}
 	
-	private void applyGravity() {
-	    if (!onGround) {
-	        velY += gravity;
-	        if (velY > maxFallSpeed)
-	            velY = maxFallSpeed;
-	    }
-	}
+//	private void applyGravity() {
+//	    if (!onGround) {
+//	        velY += gravity;
+//	        if (velY > maxFallSpeed)
+//	            velY = maxFallSpeed;
+//	    }
+//	}
 
 
 	public void updatePos() {
@@ -110,18 +117,18 @@ public class Player extends Entity{
 	    // VERTICAL MOVEMENT (gravity)
 	    // --------------------------
 
-//	    onGround = false; // we will check below
-
 	    // Predict future fall position
 	    Rectangle2D.Float futureY =
-	            new Rectangle2D.Float(hitbox.x, hitbox.y + velY, hitbox.width, hitbox.height);
+	            new Rectangle2D.Float(hitbox.x, hitbox.y + physics.getVelY(), hitbox.width, hitbox.height);
 
 	    if (HelperMethods.CanMoveHere(futureY, entities)) {
-	        newY += velY;
+	        newY += physics.getVelY();
 	    } else {
 	        // Collision -> stop falling
-	        velY = 0;
-	        onGround = true;
+//	        velY = 0;
+//	        onGround = true;
+	    	physics.setVelY(0);
+	    	physics.setOnGround(true);
 	    }
 
 	    // --------------------------
@@ -191,24 +198,26 @@ public class Player extends Entity{
 	
 	public void jump() {
 		System.out.println("JUMP PRESSED");
-	    if (onGround) {
+	    if (physics.isOnGround()) {
 	    	System.out.println("ACTUALLY JUMPED");
-	        velY = -10; // strong upward impulse
-	        onGround = false;
+//	        velY = -10; // strong upward impulse
+//	        onGround = false;
+	    	physics.setVelY(-10);
+	    	physics.setOnGround(false);
 	    }
 	}
 	
-	private boolean checkIfOnGround() {
-	    // A tiny step downward
-	    Rectangle2D.Float check = new Rectangle2D.Float(
-	            hitbox.x,
-	            hitbox.y + 1,
-	            hitbox.width,
-	            hitbox.height
-	    );
-
-	    return !HelperMethods.CanMoveHere(check, entities);
-	}
+//	private boolean checkIfOnGround() {
+//	    // A tiny step downward
+//	    Rectangle2D.Float check = new Rectangle2D.Float(
+//	            hitbox.x,
+//	            hitbox.y + 1,
+//	            hitbox.width,
+//	            hitbox.height
+//	    );
+//
+//	    return !HelperMethods.CanMoveHere(check, entities);
+//	}
 
 
 	
