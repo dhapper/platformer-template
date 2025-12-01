@@ -28,6 +28,14 @@ public class Player extends Entity{
 	private int hitboxHeight = (int) (SCALE * 12);
 	
 	private ArrayList<Entity> entities;
+	
+	// Physics
+	private float velY = 0;
+	private float gravity = 0.3f;
+	private float maxFallSpeed = 4f;
+
+	private boolean onGround = false;
+
 
 	public Player(float x, float y) {
 		super(x, y);
@@ -44,6 +52,10 @@ public class Player extends Entity{
 	}
 
 	public void update() {
+		onGround = checkIfOnGround();
+		
+		applyGravity();
+		
 		updatePos();
 		
 		setAnimation();
@@ -62,46 +74,63 @@ public class Player extends Entity{
 		
 		if(LevelManager.SHOW_HITBOXES) { drawHitbox(g); }
 	}
+	
+	private void applyGravity() {
+	    if (!onGround) {
+	        velY += gravity;
+	        if (velY > maxFallSpeed)
+	            velY = maxFallSpeed;
+	    }
+	}
+
 
 	public void updatePos() {
 
 	    float newX = hitbox.x;
 	    float newY = hitbox.y;
 
-	    // --- Vertical movement ---
-	    if (upPressed) {
-	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x, hitbox.y - speed, hitbox.width, hitbox.height);
-	        if (HelperMethods.CanMoveHere(future, entities)) {
-	            newY -= speed;
-	        }
-	    }
-
-	    if (downPressed) {
-	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x, hitbox.y + speed, hitbox.width, hitbox.height);
-	        if (HelperMethods.CanMoveHere(future, entities)) {
-	            newY += speed;
-	        }
-	    }
-
-	    // --- Horizontal movement ---
+	    // --------------------------
+	    // HORIZONTAL MOVEMENT
+	    // --------------------------
 	    if (leftPressed) {
-	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x - speed, newY, hitbox.width, hitbox.height);
+	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x - speed, hitbox.y, hitbox.width, hitbox.height);
 	        if (HelperMethods.CanMoveHere(future, entities)) {
 	            newX -= speed;
 	        }
 	    }
 
 	    if (rightPressed) {
-	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x + speed, newY, hitbox.width, hitbox.height);
+	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x + speed, hitbox.y, hitbox.width, hitbox.height);
 	        if (HelperMethods.CanMoveHere(future, entities)) {
 	            newX += speed;
 	        }
 	    }
 
-	    // --- Apply movement ---
+	    // --------------------------
+	    // VERTICAL MOVEMENT (gravity)
+	    // --------------------------
+
+//	    onGround = false; // we will check below
+
+	    // Predict future fall position
+	    Rectangle2D.Float futureY =
+	            new Rectangle2D.Float(hitbox.x, hitbox.y + velY, hitbox.width, hitbox.height);
+
+	    if (HelperMethods.CanMoveHere(futureY, entities)) {
+	        newY += velY;
+	    } else {
+	        // Collision -> stop falling
+	        velY = 0;
+	        onGround = true;
+	    }
+
+	    // --------------------------
+	    // APPLY MOVEMENT
+	    // --------------------------
 	    hitbox.x = newX;
 	    hitbox.y = newY;
 	}
+
 
 	private void updateAnimationTick() {
 		aniTick++;
@@ -159,6 +188,29 @@ public class Player extends Entity{
 	public void setRightPressed(boolean value) {
 	    rightPressed = value;
 	}
+	
+	public void jump() {
+		System.out.println("JUMP PRESSED");
+	    if (onGround) {
+	    	System.out.println("ACTUALLY JUMPED");
+	        velY = -10; // strong upward impulse
+	        onGround = false;
+	    }
+	}
+	
+	private boolean checkIfOnGround() {
+	    // A tiny step downward
+	    Rectangle2D.Float check = new Rectangle2D.Float(
+	            hitbox.x,
+	            hitbox.y + 1,
+	            hitbox.width,
+	            hitbox.height
+	    );
+
+	    return !HelperMethods.CanMoveHere(check, entities);
+	}
+
+
 	
 //	public void setHit(boolean hit) {
 //	    isHit = hit;
