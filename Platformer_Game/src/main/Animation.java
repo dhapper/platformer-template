@@ -62,7 +62,7 @@ public class Animation {
 	}
 	
 	public boolean isAnimationEnded(){
-		if(!isFirstFrame && currentFrame == 0)
+		if (!isFirstFrame && currentFrame == frames - 1)
 			return true;
 		return false;
 	}

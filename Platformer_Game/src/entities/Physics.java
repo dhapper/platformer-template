@@ -9,12 +9,13 @@ public class Physics {
 	
 	
 	private float velY = 0;
-	private float gravity = 0.3f;
-	private float maxFallSpeed = 3f;
+	private float gravity;
+	private float maxFallSpeed;
 	private boolean onGround = false;
 	
-	public Physics() {
-		
+	public Physics(float gravity, float maxFallSpeed) {
+		this.gravity = gravity;
+		this.maxFallSpeed = maxFallSpeed;
 	}
 	
 	public void update(Rectangle2D.Float hitbox, ArrayList<Entity> entities) {

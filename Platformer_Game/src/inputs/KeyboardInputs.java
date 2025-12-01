@@ -27,9 +27,10 @@ public class KeyboardInputs implements KeyListener {
             case KeyEvent.VK_A -> player.setLeftPressed(true);
             case KeyEvent.VK_S -> player.setDownPressed(true);
             case KeyEvent.VK_D -> player.setRightPressed(true);
-            case KeyEvent.VK_I -> player.setHit(true);
+//            case KeyEvent.VK_I -> player.setHit(true);
+            case KeyEvent.VK_I -> player.triggerHit();
             case KeyEvent.VK_H -> LevelManager.SHOW_HITBOXES = !LevelManager.SHOW_HITBOXES;
-            case KeyEvent.VK_SPACE -> player.jump();
+            case KeyEvent.VK_SPACE -> player.getMovement().jump();
             
         }
     }
