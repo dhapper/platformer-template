@@ -1,8 +1,11 @@
 package entities;
 
+import static utilz.Constants.General.SCALE;
+
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import main.LevelObjectAnimation;
 import utilz.HelperMethods;
 
 public class Movement {
@@ -11,6 +14,11 @@ public class Movement {
 	private Physics physics;
 	private float speed;
 	private int jump = -6;
+	private int doubleJump = -4;
+	
+	private boolean doubleJumpUsed = false;      // has player already used double jump this air time?
+	private boolean doubleJumpTriggered = false; // was double jump pressed on this tick?
+
 	
 	public Movement(float speed, int jump, Player player) {
 		this.speed = speed;
@@ -34,6 +42,8 @@ public class Movement {
 	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x - speed, hitbox.y, hitbox.width, hitbox.height);
 	        if (HelperMethods.CanMoveHere(future, entities)) {
 	            newX -= speed;
+	            if(!rightPressed)
+	            	player.setFacing(Facing.LEFT);
 	        }
 	    }
 
@@ -41,6 +51,8 @@ public class Movement {
 	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x + speed, hitbox.y, hitbox.width, hitbox.height);
 	        if (HelperMethods.CanMoveHere(future, entities)) {
 	            newX += speed;
+	            if(!leftPressed)
+	            	player.setFacing(Facing.RIGHT);
 	        }
 	    }
 
@@ -71,11 +83,33 @@ public class Movement {
 	    if (physics.isOnGround()) {
 	    	physics.setVelY(jump); // strong upward impulse
 	    	physics.setOnGround(false);
+	    }else if(!doubleJumpUsed){
+	    	doubleJumpUsed = true;
+	    	physics.setVelY(doubleJump);
+	    	player.getAnimManager().triggerSingleCycle(AnimState.DOUBLE_JUMP);
+	    	
+//	        // --- CREATE CLOUD EFFECT ---
+	    	int x = (int) (player.getHitbox().x - SCALE * 10);
+	    	int y = (int) (player.getHitbox().y - SCALE * 10);
+	    	LevelObjectAnimation cloud = new LevelObjectAnimation("/clouds.png", 4, 20, true, x, y, 32, 32);
+	    	player.getLevelManager().addLevelObject(cloud);
 	    }
 	}
 	
 	public boolean isMoving() {
 		return player.getUpPressed() || player.getDownPressed() || player.getLeftPressed() || player.getRightPressed();
+	}
+	
+	public boolean isDoubleJumpUsed() {
+		return doubleJumpUsed;
+	}
+	
+	public void setDoubleJumpUsed(boolean doubleJumpUsed) {
+		this.doubleJumpUsed = doubleJumpUsed;
+	}
+	
+	public boolean isDoubleJumpTriggered() {
+		return doubleJumpTriggered;
 	}
 	
 }

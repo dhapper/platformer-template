@@ -13,23 +13,45 @@ public class LevelManager {
 	private MapManager mapManager;
 	
 	private ArrayList<Entity> entities;
+	private ArrayList<LevelObjectAnimation> levelObjects;
 	
 	public LevelManager(Game game) {
 		this.game = game;
 		
 		entities = new ArrayList<Entity>();
+		levelObjects = new ArrayList<LevelObjectAnimation>();
 		
 		mapManager = new MapManager(this);
 		
 		game.getPlayer().setEntities(entities);
+		game.getPlayer().importLevelManager(this);
+	}
+	
+	public void update() {
+	    for (int i = levelObjects.size() - 1; i >= 0; i--) {
+	        LevelObjectAnimation loa = levelObjects.get(i);
+	        loa.update();
+	        if (loa.isFinished()) {
+	            levelObjects.remove(i);
+	        }
+	    }
 	}
 	
 	public void render(Graphics g) {
 		mapManager.render(g);
+		
+		for (LevelObjectAnimation loa : levelObjects) {
+			loa.render(g);
+		}
+
 	}
 	
 	public void addEntityToList(Entity entity) {
 		entities.add(entity);
+	}
+	
+	public void addLevelObject(LevelObjectAnimation obj) {
+		levelObjects.add(obj);
 	}
 
 }

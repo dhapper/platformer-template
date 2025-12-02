@@ -38,13 +38,14 @@ public class Game implements Runnable{
 	
 	public void update() {
 		player.update();
+		levelManager.update();
 		
 		gamePanel.updateGame();
 	}
 	
 	public void render(Graphics g) {
-		player.render(g);
 		levelManager.render(g);
+		player.render(g);
 	}
 
 	@Override

@@ -34,6 +34,10 @@ public class Player extends Entity{
 	private int jump = -6;
 	private float gravity = 0.1f;
 	private float maxFallSpeed = 3f;
+	
+	private Facing facing = Facing.RIGHT;
+	
+	private LevelManager levelManager;
 
 	public Player(float x, float y) {
 		super(x, y);
@@ -77,7 +81,7 @@ public class Player extends Entity{
 		if(invincible) { return; }
 		
 		invincible = true;
-		animManager.triggerHit();
+		animManager.triggerSingleCycle(AnimState.HIT);
 	}
 	
 	public void resetDirBools() {
@@ -86,6 +90,10 @@ public class Player extends Entity{
 		leftPressed = false;
 		rightPressed = false;
 		
+	}
+	
+	public void importLevelManager(LevelManager levelManager) {
+		this.levelManager = levelManager;
 	}
 	
 	// getters and setters
@@ -138,9 +146,24 @@ public class Player extends Entity{
 		return movement;
 	}
 	
+	public AnimationManager getAnimManager() {
+		return animManager;
+	}
+	
+	public LevelManager getLevelManager() {
+		return levelManager;
+	}
+	
 	public void setInvincible(boolean invincible) {
 		this.invincible = invincible;
 	}
 
+	public Facing getFacing() {
+		return facing;
+	}
+	
+	public void setFacing(Facing facing) {
+		this.facing = facing;
+	}
 
 }

@@ -36,6 +36,8 @@ public class Constants {
 			public static final String HIT = "/Hit (32x32).png";
 			public static final String JUMP = "/Jump (32x32).png";
 			public static final String FALL = "/Fall (32x32).png";
+			public static final String DOUBLE_JUMP = "/Double Jump (32x32).png";
+			public static final String WALL_JUMP = "/Wall Jump (32x32).png";
 		}
 		
 	}

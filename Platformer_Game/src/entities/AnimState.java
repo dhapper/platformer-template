@@ -7,5 +7,7 @@ public enum AnimState {
 	JUMP,
 	FALL,
 	HIT,
+	DOUBLE_JUMP,
+	WALL_JUMP
 
 }

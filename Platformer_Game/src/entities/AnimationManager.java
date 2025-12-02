@@ -6,13 +6,12 @@ import utilz.Constants.CharacterAnimations.Paths;
 
 public class AnimationManager {
 
-    private Animation[] anims;
+    private Animation[] anims;                // one Animation per AnimState
     private AnimState state = AnimState.IDLE;
     private AnimState prevState = null;
 
-    // frame ticking
     private int aniTick = 0;
-    private int aniSpeed = 20;
+    private int defaultAniSpeed = 10;
 
     private final Player player;
 
@@ -21,109 +20,81 @@ public class AnimationManager {
         loadAnims();
     }
 
-    // call this every frame from Player.update()
     public void update() {
         chooseState();
         tickAnimation();
     }
 
-    // returns the current sprite for rendering
+    // return the Animation object (single instance that holds left+right)
     public Animation getCurrentAnimation() {
         return anims[state.ordinal()];
     }
 
-    public int getCurrentStateIndex() {
-        return state.ordinal();
-    }
-
-    // ---- internal helpers ----
-
-    // choose the state using clear priorities and locks
     private void chooseState() {
-
-        // 1) If we are currently in HIT and the hit animation has NOT ended, keep it.
+        // HIT lock
         if (state == AnimState.HIT) {
-            if (!anims[AnimState.HIT.ordinal()].isAnimationEnded()) {
-                // stay in HIT until the animation ends
-                return;
-            } else {
-                // hit finished, clear player's hit flag so future choices are free
-                player.setInvincible(false);
-                // fall through to next logic to choose new state
-            }
+            if (!getCurrentAnimation().isAnimationEnded()) return;
+            else player.setInvincible(false);
         }
-        
 
+        // DOUBLE_JUMP lock (if you still use that logic)
+        if (!player.getPhysics().isOnGround() && player.getMovement().isDoubleJumpUsed()) {
+            if (!getCurrentAnimation().isAnimationEnded()) return;
+        }
 
-        // 2) airborne states (JUMP / FALL) - read velocity and grounded status from player
+        // AIRBORNE
         if (!player.getPhysics().isOnGround()) {
             float velY = player.getPhysics().getVelY();
-            if (velY < 0) {
-                changeState(AnimState.JUMP);
-            } else {
-                changeState(AnimState.FALL);
-            }
+            if (velY < 0) changeState(AnimState.JUMP);
+            else changeState(AnimState.FALL);
             return;
         }
 
-        // 3) ground movement
-        if (player.getMovement().isMoving()) {
-            changeState(AnimState.RUN);
-        } else {
-            changeState(AnimState.IDLE);
-        }
+        // GROUND
+        player.getMovement().setDoubleJumpUsed(false);
+        if (player.getMovement().isMoving()) changeState(AnimState.RUN);
+        else changeState(AnimState.IDLE);
     }
 
-    // advances frame (called each update); resets frame when state changes
     private void tickAnimation() {
-        // if state changed, reset the animation for the new state
+        Animation anim = getCurrentAnimation();
+
+        // state change = reset animation
         if (prevState != state) {
-            anims[state.ordinal()].reset();
             prevState = state;
             aniTick = 0;
-            return; // don't advance the first frame the same tick we changed to it (optional)
+            anim.reset();
+            return;
         }
 
         aniTick++;
-        if (aniTick >= aniSpeed) {
+        if (aniTick >= anim.getSpeed()) {
             aniTick = 0;
-            anims[state.ordinal()].nextFrame();
+            anim.nextFrame();
         }
     }
 
-    // small helper to change state
     private void changeState(AnimState newState) {
-        if (state != newState) {
-            state = newState;
-        }
+        if (state != newState) state = newState;
     }
-    
-    // call this to start a hit animation safely from Player
-    public void triggerHit() {
-        // set state to HIT and reset its animation
-        changeState(AnimState.HIT);
-        anims[AnimState.HIT.ordinal()].reset();
-        // ensure the tick/state-tracking picks up the new state properly
+
+    public void triggerSingleCycle(AnimState s) {
+        changeState(s);
+        getCurrentAnimation().reset();
         prevState = null;
         aniTick = 0;
     }
 
-
     private void loadAnims() {
         anims = new Animation[AnimState.values().length];
 
-        String idle = Constants.ResourcePaths.MAIN_CHARACTERS + "Ninja Frog" + Paths.IDLE;
-        String run = Constants.ResourcePaths.MAIN_CHARACTERS + "Ninja Frog" + Paths.RUN;
-        String hit = Constants.ResourcePaths.MAIN_CHARACTERS + "Ninja Frog" + Paths.HIT;
-        String jump = Constants.ResourcePaths.MAIN_CHARACTERS + "Ninja Frog" + Paths.JUMP;
-        String fall = Constants.ResourcePaths.MAIN_CHARACTERS + "Ninja Frog" + Paths.FALL;
-
-        // Make sure indexes match AnimState order:
-        anims[AnimState.IDLE.ordinal()] = new Animation(idle, 11);
-        anims[AnimState.RUN.ordinal()]  = new Animation(run, 12);
-        anims[AnimState.JUMP.ordinal()] = new Animation(jump, 1); // reuse run/single frame or add proper sprite
-        anims[AnimState.FALL.ordinal()] = new Animation(fall, 1); // replace with proper sprites if available
-        anims[AnimState.HIT.ordinal()]  = new Animation(hit, 5);
+        String base = Constants.ResourcePaths.MAIN_CHARACTERS + "Ninja Frog";
+        anims[AnimState.IDLE.ordinal()]       = new Animation(base + Paths.IDLE, 11, defaultAniSpeed);
+        anims[AnimState.RUN.ordinal()]        = new Animation(base + Paths.RUN, 12, defaultAniSpeed);
+        anims[AnimState.JUMP.ordinal()]       = new Animation(base + Paths.JUMP, 1, defaultAniSpeed);
+        anims[AnimState.FALL.ordinal()]       = new Animation(base + Paths.FALL, 1, defaultAniSpeed);
+        anims[AnimState.HIT.ordinal()]        = new Animation(base + Paths.HIT, 5, defaultAniSpeed);
+        anims[AnimState.DOUBLE_JUMP.ordinal()] = new Animation(base + Paths.DOUBLE_JUMP, 6, defaultAniSpeed);
+        anims[AnimState.WALL_JUMP.ordinal()]  = new Animation(base + Paths.WALL_JUMP, 5, defaultAniSpeed);
     }
-
 }

@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -72,6 +73,10 @@ public class MapManager {
 	}
 	
 	public void render(Graphics g) {
+		
+		g.setColor(new Color(200, 200, 220));
+		g.fillRect(0, 0, 1400, 1000);
+		
 	    int rows = tileMap.length;
 	    int cols = tileMap[0].length;
 	    for (int j = 0; j < rows; j++) {
