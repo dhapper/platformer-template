@@ -34,7 +34,6 @@ public class LevelObjectAnimation {
     }
     
     public void update() {
-        System.out.println("Update called, index: " + index + ", tick: " + tick + ", speed: " + speed);
         if (finished) return; // Skip update if already finished
 
         tick++;

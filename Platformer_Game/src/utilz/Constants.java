@@ -5,6 +5,10 @@ public class Constants {
 	
 	public static class General {
 		public static final float SCALE = 4.0f;
+		public static final int GAME_TILES_WIDE = 20;
+		public static final int GAME_TILES_HIGH = 12;
+		public static final int SCREEN_WIDTH = GAME_TILES_WIDE * TileConstants.TERRAIN_TILE_SIZE;
+		public static final int SCREEN_HEIGHT = GAME_TILES_HIGH * TileConstants.TERRAIN_TILE_SIZE;
 	}
 	
 	public static class Directions {

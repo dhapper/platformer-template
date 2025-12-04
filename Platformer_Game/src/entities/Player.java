@@ -8,6 +8,7 @@ import utilz.HelperMethods;
 
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static utilz.Constants.General.*;
@@ -21,6 +22,8 @@ public class Player extends Entity{
 	private int hitboxWidth = (int) (SCALE * 10);
 	private int hitboxHeight = (int) (SCALE * 12);
 	
+	private int drawSize = (int) (16 * SCALE);
+	
 	private ArrayList<Entity> entities;
 	
 	private Physics physics;
@@ -30,10 +33,11 @@ public class Player extends Entity{
 	private boolean invincible = false;
 	
 	// movement/physics
-	private float speed = 2;
-	private int jump = -6;
-	private float gravity = 0.1f;
-	private float maxFallSpeed = 3f;
+	private float speed = 0.5f * SCALE;
+	private float jump = -1.5f * SCALE;
+	private float doubleJump = -1f * SCALE;
+	private float gravity = 0.025f * SCALE;
+	private float maxFallSpeed = 0.75f * SCALE;
 	
 	private Facing facing = Facing.RIGHT;
 	
@@ -52,7 +56,7 @@ public class Player extends Entity{
 		initHitbox(x, y, hitboxWidth, hitboxHeight);
 		
 		physics = new Physics(gravity, maxFallSpeed);
-		movement = new Movement(speed, jump, this);
+		movement = new Movement(speed, jump, doubleJump, this);
 		animManager = new AnimationManager(this);
 	}
 
@@ -67,15 +71,28 @@ public class Player extends Entity{
 	}
 	
 	public void render(Graphics g) {
-		Animation anim = animManager.getCurrentAnimation();
-		g.drawImage(anim.getCurrentSprite(),
-		            (int) (hitbox.x - xDrawOffset),
-		            (int) (hitbox.y - yDrawOffset),
-		            64, 64, null);
+	    Animation anim = animManager.getCurrentAnimation();
+	    BufferedImage frame = anim.getCurrentSprite();
 
-		
-		if(LevelManager.SHOW_HITBOXES) { drawHitbox(g); }
+	    int drawX = (int)(hitbox.x - xDrawOffset);
+	    int drawY = (int)(hitbox.y - yDrawOffset);
+
+	    if (getFacing() == Facing.LEFT) {
+	        g.drawImage(
+	            frame,
+	            drawX + drawSize,
+	            drawY,
+	            -drawSize,
+	            drawSize,
+	            null
+	        );
+	    } else {
+	        g.drawImage(frame, drawX, drawY, drawSize, drawSize, null);
+	    }
+
+	    if (LevelManager.SHOW_HITBOXES) { drawHitbox(g); }
 	}
+
 	
 	public void triggerHit() {
 		if(invincible) { return; }
@@ -94,6 +111,11 @@ public class Player extends Entity{
 	
 	public void importLevelManager(LevelManager levelManager) {
 		this.levelManager = levelManager;
+	}
+	
+	public void respawn() {
+		hitbox.x = 100;
+		hitbox.y = 100;
 	}
 	
 	// getters and setters

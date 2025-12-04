@@ -3,6 +3,7 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 import entities.Tile;
 import utilz.Constants;
@@ -21,28 +22,19 @@ public class MapManager {
 	
 	private Tile[][] tileMap;
 	
-	private int[][] map = {
-			{5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
-			{5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
-			{5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
-			{5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
-		    {5, 5, 5, 5, 5, 5, 5, 0, 2, 5},
-		    {5, 5, 5, 5, 5, 5, 0, 26, 24, 5},
-		    {5, 5, 5, 5, 5, 5, 44, 45, 46, 5},
-		    {5, 6, 7, 7, 8, 5, 5, 5, 5, 5},
-		    {5, 28, 29, 29, 30, 5, 5, 5, 5, 5}
-		};
+	private int[][] map;
 	
 	private LevelManager levelManager;
 	
 	public MapManager(LevelManager levelManager) {
 		this.levelManager = levelManager;
 		
+		map = MapLoader.LoadMapFromCSV("res/Levels/LEVEL_1.csv");
+		
 		tileSheet = LoadSave.ImportImg(Constants.ResourcePaths.TILES);
 		
 		prepTiles();
 		prepTileMap();
-//		levelManager
 	}
 	
 	public void prepTiles() {
@@ -67,7 +59,6 @@ public class MapManager {
 	        for (int i = 0; i < cols; i++) {
 	        	tileMap[j][i] = new Tile(TERRAIN_TILE_SIZE * i, TERRAIN_TILE_SIZE * j, map[j][i]);
 	        	levelManager.addEntityToList(tileMap[j][i]);
-//	            g.drawImage(tiles[map[j][i]], TERRAIN_TILE_SIZE * i, TERRAIN_TILE_SIZE * j, TERRAIN_TILE_SIZE, TERRAIN_TILE_SIZE, null);
 	        }
 	    }
 	}
@@ -75,16 +66,14 @@ public class MapManager {
 	public void render(Graphics g) {
 		
 		g.setColor(new Color(200, 200, 220));
-		g.fillRect(0, 0, 1400, 1000);
+		g.fillRect(0, 0, Constants.General.SCREEN_WIDTH, Constants.General.SCREEN_HEIGHT);
 		
 	    int rows = tileMap.length;
 	    int cols = tileMap[0].length;
 	    for (int j = 0; j < rows; j++) {
 	        for (int i = 0; i < cols; i++) {
-//	            g.drawImage(tiles[map[j][i]], TERRAIN_TILE_SIZE * i, TERRAIN_TILE_SIZE * j, TERRAIN_TILE_SIZE, TERRAIN_TILE_SIZE, null);
 	        	Tile currentTile = tileMap[j][i];
 	        	if(currentTile.getHitbox() != null) {
-//	        		g.drawImage(tiles[currentTile.getId()], TERRAIN_TILE_SIZE * i, TERRAIN_TILE_SIZE * j, TERRAIN_TILE_SIZE, TERRAIN_TILE_SIZE, null);
 	        		g.drawImage(
 	        				tiles[currentTile.getId()],
 	        				(int) currentTile.getHitbox().x,
