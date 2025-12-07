@@ -1,15 +1,16 @@
-package main;
+package level;
+
+import static utilz.Constants.TileConstants.DEFAULT_TERRAIN_TILE_SIZE;
+import static utilz.Constants.TileConstants.TERRAIN_TILE_SIZE;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 import entities.Tile;
 import utilz.Constants;
 import utilz.LoadSave;
-
-import static utilz.Constants.TileConstants.*;
+import utilz.MapLoader;
 
 public class MapManager {
 	

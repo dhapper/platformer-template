@@ -8,12 +8,7 @@ import javax.imageio.ImageIO;
 
 public class LoadSave {
 	
-	
-	
-
 	public static BufferedImage ImportImg(String path) {
-
-//		String path = "/Pixel Adventure Assets/Main Characters/Mask Dude/Idle (32x32).png";
 		BufferedImage img = null;
 		InputStream is = LoadSave.class.getResourceAsStream(path);
 

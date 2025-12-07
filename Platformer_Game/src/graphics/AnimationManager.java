@@ -1,12 +1,12 @@
-package entities;
+package graphics;
 
-import main.Animation;
+import entities.Player;
 import utilz.Constants;
 import utilz.Constants.CharacterAnimations.Paths;
 
 public class AnimationManager {
 
-    private Animation[] anims;                // one Animation per AnimState
+    private Animation[] anims;	// one Animation per AnimState
     private AnimState state = AnimState.IDLE;
     private AnimState prevState = null;
 

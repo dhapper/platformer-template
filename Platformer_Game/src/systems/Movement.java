@@ -1,11 +1,15 @@
-package entities;
+package systems;
 
 import static utilz.Constants.General.SCALE;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import main.LevelObjectAnimation;
+import entities.Entity;
+import entities.Facing;
+import entities.Player;
+import graphics.AnimState;
+import graphics.LevelObjectAnimation;
 import utilz.HelperMethods;
 
 public class Movement {

@@ -1,17 +1,17 @@
 package entities;
 
-import main.Animation;
-import main.LevelManager;
-import utilz.Constants;
-import utilz.Constants.CharacterAnimations.Paths;
-import utilz.HelperMethods;
+import static utilz.Constants.General.SCALE;
 
 import java.awt.Graphics;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static utilz.Constants.General.*;
+import graphics.AnimState;
+import graphics.Animation;
+import graphics.AnimationManager;
+import level.LevelManager;
+import systems.Movement;
+import systems.Physics;
 
 public class Player extends Entity{
 	

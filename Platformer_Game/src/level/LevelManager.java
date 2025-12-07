@@ -1,9 +1,11 @@
-package main;
+package level;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
 
 import entities.Entity;
+import graphics.LevelObjectAnimation;
+import main.Game;
 
 public class LevelManager {
 	

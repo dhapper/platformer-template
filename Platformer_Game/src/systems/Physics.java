@@ -1,8 +1,9 @@
-package entities;
+package systems;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import entities.Entity;
 import utilz.HelperMethods;
 
 public class Physics {

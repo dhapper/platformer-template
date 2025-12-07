@@ -4,8 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import entities.Player;
+import level.LevelManager;
 import main.GamePanel;
-import main.LevelManager;
 
 public class KeyboardInputs implements KeyListener {
 

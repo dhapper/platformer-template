@@ -1,4 +1,4 @@
-package entities;
+package graphics;
 
 public enum AnimState {
 	
