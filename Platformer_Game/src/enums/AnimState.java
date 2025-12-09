@@ -1,4 +1,4 @@
-package graphics;
+package enums;
 
 public enum AnimState {
 	
@@ -8,6 +8,7 @@ public enum AnimState {
 	FALL,
 	HIT,
 	DOUBLE_JUMP,
-	WALL_JUMP
+	WALL_JUMP,
+	WALK
 
 }

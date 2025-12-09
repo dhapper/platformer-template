@@ -3,6 +3,7 @@ package level;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import entities.AngryPig;
 import entities.Entity;
 import graphics.LevelObjectAnimation;
 import main.Game;
@@ -17,6 +18,8 @@ public class LevelManager {
 	private ArrayList<Entity> entities;
 	private ArrayList<LevelObjectAnimation> levelObjects;
 	
+	AngryPig ap;
+	
 	public LevelManager(Game game) {
 		this.game = game;
 		
@@ -27,6 +30,8 @@ public class LevelManager {
 		
 		game.getPlayer().setEntities(entities);
 		game.getPlayer().importLevelManager(this);
+		
+		ap = new AngryPig(200, 100);
 	}
 	
 	public void update() {
@@ -45,6 +50,8 @@ public class LevelManager {
 		for (LevelObjectAnimation loa : levelObjects) {
 			loa.render(g);
 		}
+		
+		ap.render(g);
 
 	}
 	

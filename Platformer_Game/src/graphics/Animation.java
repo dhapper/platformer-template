@@ -15,7 +15,7 @@ public class Animation {
     private int speed;
 
     // Load from sprite sheet
-    public Animation(String path, int frames, int speed) {
+    public Animation(String path, int frames, int speed, int width, int height) {
         this.frames = frames;
         this.speed = speed;
         
@@ -25,13 +25,13 @@ public class Animation {
             e.printStackTrace();
         }
 
-        prepSprites();
+        prepSprites(width, height);
     }
 
-    private void prepSprites() {
+    private void prepSprites(int width, int height) {
         sprites = new BufferedImage[frames];
         for (int i = 0; i < frames; i++) {
-            sprites[i] = spriteSheet.getSubimage(i * 32, 0, 32, 32);
+            sprites[i] = spriteSheet.getSubimage(i * width, 0, width, height);
         }
     }
 

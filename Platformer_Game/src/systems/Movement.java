@@ -6,15 +6,16 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import entities.Entity;
-import entities.Facing;
+import entities.LivingEntity;
 import entities.Player;
-import graphics.AnimState;
+import enums.AnimState;
+import enums.Facing;
 import graphics.LevelObjectAnimation;
 import utilz.HelperMethods;
 
 public class Movement {
 	
-	private Player player;
+	private LivingEntity livingEntity;
 	private Physics physics;
 	private float speed;
 	private float jump;
@@ -24,18 +25,18 @@ public class Movement {
 	private boolean doubleJumpTriggered = false; // was double jump pressed on this tick?
 
 	
-	public Movement(float speed, float jump, float doubleJump, Player player) {
+	public Movement(float speed, float jump, float doubleJump, LivingEntity livingEntity) {
 		this.speed = speed;
 		this.jump = jump;
 		this.doubleJump = doubleJump;
-		this.player = player;
-		this.physics = player.getPhysics();
+		this.livingEntity = livingEntity;
+		this.physics = livingEntity.getPhysics();
 	}
 
 	public void updatePos(boolean leftPressed, boolean rightPressed) {
 		
-		Rectangle2D.Float hitbox = player.getHitbox();
-		ArrayList<Entity> entities = player.getEntities();
+		Rectangle2D.Float hitbox = livingEntity.getHitbox();
+		ArrayList<Entity> entities = livingEntity.getEntities();
 
 	    float newX = hitbox.x;
 	    float newY = hitbox.y;
@@ -48,7 +49,7 @@ public class Movement {
 	        if (HelperMethods.CanMoveHere(future, entities)) {
 	            newX -= speed;
 	            if(!rightPressed)
-	            	player.setFacing(Facing.LEFT);
+	            	livingEntity.setFacing(Facing.LEFT);
 	        }
 	    }
 
@@ -57,7 +58,7 @@ public class Movement {
 	        if (HelperMethods.CanMoveHere(future, entities)) {
 	            newX += speed;
 	            if(!leftPressed)
-	            	player.setFacing(Facing.RIGHT);
+	            	livingEntity.setFacing(Facing.RIGHT);
 	        }
 	    }
 
@@ -91,18 +92,23 @@ public class Movement {
 	    }else if(!doubleJumpUsed){
 	    	doubleJumpUsed = true;
 	    	physics.setVelY(doubleJump);
-	    	player.getAnimManager().triggerSingleCycle(AnimState.DOUBLE_JUMP);
+	    	livingEntity.getAnimManager().triggerSingleCycle(AnimState.DOUBLE_JUMP);
 	    	
 //	        // --- CREATE CLOUD EFFECT ---
-	    	int x = (int) (player.getHitbox().x - SCALE * 10);
-	    	int y = (int) (player.getHitbox().y - SCALE * 10);
+	    	int x = (int) (livingEntity.getHitbox().x - SCALE * 10);
+	    	int y = (int) (livingEntity.getHitbox().y - SCALE * 10);
 	    	LevelObjectAnimation cloud = new LevelObjectAnimation("/Custom Assets/clouds.png", 4, 20, true, x, y, 32, 32);
-	    	player.getLevelManager().addLevelObject(cloud);
+	    	livingEntity.getLevelManager().addLevelObject(cloud);
 	    }
 	}
 	
 	public boolean isMoving() {
-		return player.getUpPressed() || player.getDownPressed() || player.getLeftPressed() || player.getRightPressed();
+		if(livingEntity instanceof Player) {
+			Player player = (Player) livingEntity;
+			return player.getUpPressed() || player.getDownPressed() || player.getLeftPressed() || player.getRightPressed();
+		}else {
+			return false;
+		}
 	}
 	
 	public boolean isDoubleJumpUsed() {

@@ -29,20 +29,32 @@ public class Constants {
 		public static final String TILES = "/Pixel Adventure Assets/Terrain/Terrain (16x16).png";
 		public static final String BACKGROUND = "/Pixel Adventure Assets/Background/";
 		
+		public static final String ENEMIES = "/Pixel Adventure Assets/Enemies/";
 	}
 	
 	
 	public static class CharacterAnimations {
 		
-		public static class Paths{
-			public static final String IDLE = "/Idle (32x32).png";
-			public static final String RUN = "/Run (32x32).png";
-			public static final String HIT = "/Hit (32x32).png";
-			public static final String JUMP = "/Jump (32x32).png";
-			public static final String FALL = "/Fall (32x32).png";
-			public static final String DOUBLE_JUMP = "/Double Jump (32x32).png";
-			public static final String WALL_JUMP = "/Wall Jump (32x32).png";
-		}
+		public static class Paths {
+			public static class Player {
+				public static final String IDLE = "/Idle (32x32).png";
+				public static final String RUN = "/Run (32x32).png";
+				public static final String HIT = "/Hit (32x32).png";
+				public static final String JUMP = "/Jump (32x32).png";
+				public static final String FALL = "/Fall (32x32).png";
+				public static final String DOUBLE_JUMP = "/Double Jump (32x32).png";
+				public static final String WALL_JUMP = "/Wall Jump (32x32).png";
+			}
+			
+			public static class Enemy {
+					public static final String WALK = "/Walk (36x30).png";
+					public static final String IDLE = "/Idle (36x30).png";
+					public static final String RUN = "/Run (36x30).png";
+					public static final String HIT_1 = "/Hit 1 (36x30).png";
+					public static final String HIT_2 = "/Hit 2 (36x30).png";
+			}
+		}		
+		
 		
 	}
 	
