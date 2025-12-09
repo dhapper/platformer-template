@@ -64,9 +64,13 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 		
 		initHitbox(x, y, hitboxWidth, hitboxHeight);
 		
-		physics = new Physics(gravity, maxFallSpeed);
+		physics = new Physics(gravity, maxFallSpeed, this);
 		movement = new Movement(speed, jump, doubleJump, this);
 		animManager = new AnimationManager(this);
+	}
+	
+	public void importLevelManager(LevelManager levelManager) {
+		this.levelManager = levelManager;
 	}
 	
 	// getters and setters

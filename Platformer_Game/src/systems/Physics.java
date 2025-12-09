@@ -4,19 +4,21 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import entities.Entity;
+import entities.LivingEntity;
 import utilz.HelperMethods;
 
 public class Physics {
 	
-	
+	private LivingEntity livingEntity;
 	private float velY = 0;
 	private float gravity;
 	private float maxFallSpeed;
 	private boolean onGround = false;
 	
-	public Physics(float gravity, float maxFallSpeed) {
+	public Physics(float gravity, float maxFallSpeed, LivingEntity livingEntity) {
 		this.gravity = gravity;
 		this.maxFallSpeed = maxFallSpeed;
+		this.livingEntity = livingEntity;
 	}
 	
 	public void update(Rectangle2D.Float hitbox, ArrayList<Entity> entities) {
@@ -41,7 +43,7 @@ public class Physics {
 	            hitbox.height
 	    );
 
-	    return !HelperMethods.CanMoveHere(check, entities);
+	    return !HelperMethods.CanMoveHere(check, entities, livingEntity);
 	}
 	
 	public float getVelY() {

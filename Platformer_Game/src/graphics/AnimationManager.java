@@ -33,21 +33,27 @@ public class AnimationManager {
         }
     }
 
-//    public Animation getCurrentAnimation() {
-//        return anims[state.ordinal()];
-//    }
-
-    public void update() {
-        chooseState();
+    public void updatePlayer() {
+        choosePlayerState();
         tickAnimation();
+    }
+    
+    public void updateEnemy() {
+    	// chooseEnemyState // maybe specific behaviours?
+    	tickAnimation();
     }
 
     // return the Animation object (single instance that holds left+right)
     public Animation getCurrentAnimation() {
         return anims[state.ordinal()];
     }
+    
+    public void setState(AnimState newState) {
+    	prevState = state;
+    	state = newState;
+    }
 
-    private void chooseState() {
+    public void choosePlayerState() {
         // HIT lock
         if (state == AnimState.HIT) {
             if (!getCurrentAnimation().isAnimationEnded()) return;
@@ -102,16 +108,4 @@ public class AnimationManager {
         aniTick = 0;
     }
 
-//    private void loadAnims() {
-//        anims = new Animation[AnimState.values().length];
-//
-//        String base = Constants.ResourcePaths.MAIN_CHARACTERS + "Ninja Frog";
-//        anims[AnimState.IDLE.ordinal()]       = new Animation(base + Paths.IDLE, 11, defaultAniSpeed);
-//        anims[AnimState.RUN.ordinal()]        = new Animation(base + Paths.RUN, 12, defaultAniSpeed);
-//        anims[AnimState.JUMP.ordinal()]       = new Animation(base + Paths.JUMP, 1, defaultAniSpeed);
-//        anims[AnimState.FALL.ordinal()]       = new Animation(base + Paths.FALL, 1, defaultAniSpeed);
-//        anims[AnimState.HIT.ordinal()]        = new Animation(base + Paths.HIT, 5, defaultAniSpeed);
-//        anims[AnimState.DOUBLE_JUMP.ordinal()] = new Animation(base + Paths.DOUBLE_JUMP, 6, defaultAniSpeed);
-//        anims[AnimState.WALL_JUMP.ordinal()]  = new Animation(base + Paths.WALL_JUMP, 5, defaultAniSpeed);
-//    }
 }

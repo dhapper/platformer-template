@@ -59,12 +59,12 @@ public class Player extends LivingEntity {
 		spriteWidth = 32;
 		spriteHeight = 32;
 		
-		xDrawOffset = (int) (SCALE * 3);
-		yDrawOffset = (int) (SCALE * 4);
-		hitboxWidth = (int) (SCALE * 10);
-		hitboxHeight = (int) (SCALE * 12);
+		xDrawOffset = (int) (SCALE * 6);
+		yDrawOffset = (int) (SCALE * 8);
+		hitboxWidth = (int) (SCALE * 20);
+		hitboxHeight = (int) (SCALE * 23);
 		
-		drawSize = (int) (16 * SCALE);	// seems to be size of character
+//		drawSize = (int) (16 * SCALE);	// seems to be size of character
 		
 		speed = 0.5f * SCALE;
 		jump = -1.5f * SCALE;
@@ -105,7 +105,7 @@ public class Player extends LivingEntity {
 		
 		movement.updatePos(leftPressed, rightPressed);
 		
-		animManager.update();
+		animManager.updatePlayer();
 		
 	}
 	
@@ -119,14 +119,14 @@ public class Player extends LivingEntity {
 	    if (getFacing() == Facing.LEFT) {
 	        g.drawImage(
 	            frame,
-	            drawX + drawSize,
+	            drawX + (int) (spriteWidth*SCALE),
 	            drawY,
-	            -drawSize,
-	            drawSize,
+	            -(int) (spriteWidth*SCALE),
+	            (int) (spriteHeight*SCALE),
 	            null
 	        );
 	    } else {
-	        g.drawImage(frame, drawX, drawY, drawSize, drawSize, null);
+	        g.drawImage(frame, drawX, drawY, (int) (spriteWidth*SCALE), (int) (spriteHeight*SCALE), null);
 	    }
 
 	    if (LevelManager.SHOW_HITBOXES) { drawHitbox(g); }
@@ -146,10 +146,6 @@ public class Player extends LivingEntity {
 		leftPressed = false;
 		rightPressed = false;
 		
-	}
-	
-	public void importLevelManager(LevelManager levelManager) {
-		this.levelManager = levelManager;
 	}
 	
 	public void respawn() {

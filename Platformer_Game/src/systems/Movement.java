@@ -46,7 +46,7 @@ public class Movement {
 	    // --------------------------
 	    if (leftPressed) {
 	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x - speed, hitbox.y, hitbox.width, hitbox.height);
-	        if (HelperMethods.CanMoveHere(future, entities)) {
+	        if (HelperMethods.CanMoveHere(future, entities, livingEntity)) {
 	            newX -= speed;
 	            if(!rightPressed)
 	            	livingEntity.setFacing(Facing.LEFT);
@@ -55,7 +55,7 @@ public class Movement {
 
 	    if (rightPressed) {
 	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x + speed, hitbox.y, hitbox.width, hitbox.height);
-	        if (HelperMethods.CanMoveHere(future, entities)) {
+	        if (HelperMethods.CanMoveHere(future, entities, livingEntity)) {
 	            newX += speed;
 	            if(!leftPressed)
 	            	livingEntity.setFacing(Facing.RIGHT);
@@ -70,7 +70,7 @@ public class Movement {
 	    Rectangle2D.Float futureY =
 	            new Rectangle2D.Float(hitbox.x, hitbox.y + physics.getVelY(), hitbox.width, hitbox.height);
 
-	    if (HelperMethods.CanMoveHere(futureY, entities)) {
+	    if (HelperMethods.CanMoveHere(futureY, entities, livingEntity)) {
 	        newY += physics.getVelY();
 	    } else {
 	        // Collision -> stop falling
@@ -95,8 +95,8 @@ public class Movement {
 	    	livingEntity.getAnimManager().triggerSingleCycle(AnimState.DOUBLE_JUMP);
 	    	
 //	        // --- CREATE CLOUD EFFECT ---
-	    	int x = (int) (livingEntity.getHitbox().x - SCALE * 10);
-	    	int y = (int) (livingEntity.getHitbox().y - SCALE * 10);
+	    	int x = (int) (livingEntity.getHitbox().x - SCALE * 5);
+	    	int y = (int) (livingEntity.getHitbox().y - SCALE * 5);
 	    	LevelObjectAnimation cloud = new LevelObjectAnimation("/Custom Assets/clouds.png", 4, 20, true, x, y, 32, 32);
 	    	livingEntity.getLevelManager().addLevelObject(cloud);
 	    }

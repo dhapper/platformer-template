@@ -28,10 +28,15 @@ public class LevelManager {
 		
 		mapManager = new MapManager(this);
 		
-		game.getPlayer().setEntities(entities);
 		game.getPlayer().importLevelManager(this);
+		addEntityToList(game.getPlayer());
 		
 		ap = new AngryPig(200, 100);
+		ap.importLevelManager(this);
+		addEntityToList(ap);
+		
+		game.getPlayer().setEntities(entities);
+		ap.setEntities(entities);
 	}
 	
 	public void update() {
@@ -42,6 +47,8 @@ public class LevelManager {
 	            levelObjects.remove(i);
 	        }
 	    }
+	    
+	    ap.update();
 	}
 	
 	public void render(Graphics g) {
