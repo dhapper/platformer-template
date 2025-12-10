@@ -71,6 +71,8 @@ public class Player extends LivingEntity {
 		doubleJump = -1f * SCALE;
 		gravity = 0.025f * SCALE;
 		maxFallSpeed = 0.75f * SCALE;
+		
+		facing = Facing.RIGHT;
 	}
 	
     @Override

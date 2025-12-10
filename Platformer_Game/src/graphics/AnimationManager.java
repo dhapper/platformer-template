@@ -39,7 +39,7 @@ public class AnimationManager {
     }
     
     public void updateEnemy() {
-    	// chooseEnemyState // maybe specific behaviours?
+    	chooseEnemyState();
     	tickAnimation();
     }
 
@@ -51,6 +51,24 @@ public class AnimationManager {
     public void setState(AnimState newState) {
     	prevState = state;
     	state = newState;
+    }
+    
+    public void chooseEnemyState() {
+        // HIT lock
+//        if (state == AnimState.HIT_1) {
+//            if (!getCurrentAnimation().isAnimationEnded()) return;
+//            else System.out.println("hi");
+////            else livingEntity.setHurt(false);
+//        }
+       
+    	if(livingEntity.isHurt()) {
+    		changeState(AnimState.HIT_1);
+    		if (!getCurrentAnimation().isAnimationEnded()) return;
+    		else livingEntity.setHurt(false);
+    	}
+    	
+        // Default Walk
+        changeState(AnimState.WALK);
     }
 
     public void choosePlayerState() {

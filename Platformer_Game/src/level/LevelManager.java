@@ -15,7 +15,7 @@ public class LevelManager {
 	private Game game;
 	private MapManager mapManager;
 	
-	private ArrayList<Entity> entities;
+	private ArrayList<Entity> entities, enemies;
 	private ArrayList<LevelObjectAnimation> levelObjects;
 	
 	AngryPig ap;
@@ -24,16 +24,18 @@ public class LevelManager {
 		this.game = game;
 		
 		entities = new ArrayList<Entity>();
+		enemies = new ArrayList<Entity>();
 		levelObjects = new ArrayList<LevelObjectAnimation>();
 		
 		mapManager = new MapManager(this);
 		
 		game.getPlayer().importLevelManager(this);
-		addEntityToList(game.getPlayer());
+		addEntityToList(entities, game.getPlayer());
 		
-		ap = new AngryPig(200, 100);
+		ap = new AngryPig(700, 300);
 		ap.importLevelManager(this);
-		addEntityToList(ap);
+		addEntityToList(entities, ap);
+		addEntityToList(enemies, ap);
 		
 		game.getPlayer().setEntities(entities);
 		ap.setEntities(entities);
@@ -54,20 +56,34 @@ public class LevelManager {
 	public void render(Graphics g) {
 		mapManager.render(g);
 		
+		ap.render(g);
+		
 		for (LevelObjectAnimation loa : levelObjects) {
 			loa.render(g);
 		}
-		
-		ap.render(g);
 
 	}
 	
-	public void addEntityToList(Entity entity) {
-		entities.add(entity);
+	public void addEntityToList(ArrayList<Entity> list, Entity entity) {
+		list.add(entity);
 	}
 	
 	public void addLevelObject(LevelObjectAnimation obj) {
 		levelObjects.add(obj);
+	}
+	
+	// getters and setters
+	
+	public Game getGame() {
+		return game;
+	}
+	
+	public ArrayList<Entity> getEntities(){
+		return entities;
+	}
+	
+	public ArrayList<Entity> getEnemies(){
+		return enemies;
 	}
 
 }

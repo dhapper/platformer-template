@@ -30,7 +30,7 @@ public class MapManager {
 	public MapManager(LevelManager levelManager) {
 		this.levelManager = levelManager;
 		
-		map = MapLoader.LoadMapFromCSV("res/Levels/LEVEL_1.csv");
+		map = MapLoader.LoadMapFromCSV("res/Levels/LEVEL_2.csv");
 		
 		tileSheet = LoadSave.ImportImg(Constants.ResourcePaths.TILES);
 		
@@ -59,7 +59,7 @@ public class MapManager {
 	    for (int j = 0; j < rows; j++) {
 	        for (int i = 0; i < cols; i++) {
 	        	tileMap[j][i] = new Tile(TERRAIN_TILE_SIZE * i, TERRAIN_TILE_SIZE * j, map[j][i]);
-	        	levelManager.addEntityToList(tileMap[j][i]);
+	        	levelManager.addEntityToList(levelManager.getEntities(), tileMap[j][i]);
 	        }
 	    }
 	}

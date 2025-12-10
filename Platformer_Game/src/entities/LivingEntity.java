@@ -42,15 +42,17 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 	protected float doubleJump;
 	protected float gravity;
 	protected float maxFallSpeed;
-	protected Facing facing = Facing.RIGHT;
+	protected Facing facing;
 	
 	protected ArrayList<Entity> entities;
+	protected ArrayList<Entity> livingEntities;
 	protected Physics physics;
 	protected Movement movement;
 	protected AnimationManager animManager;
 	protected LevelManager levelManager;
 	
 	protected boolean invincible = false;
+	protected boolean hurt = false;
 
 	
 	public LivingEntity(float x, float y) {
@@ -117,6 +119,14 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 	
 	public int getSpriteHeight() {
 		return spriteHeight;
+	}
+	
+	public boolean isHurt() {
+		return hurt;
+	}
+	
+	public void setHurt(boolean hurt) {
+		this.hurt = hurt;
 	}
 
 }
