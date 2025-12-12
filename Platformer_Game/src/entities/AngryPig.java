@@ -58,17 +58,14 @@ public class AngryPig extends LivingEntity{
     
 	public void update() {
 		physics.update(hitbox, entities);
-//		movement.updatePos(leftPressed, rightPressed);
-		
 		
 		movement.updateEnemyPos();
 		
 		animManager.updateEnemy();
 		
 		jumpedOn();
+		touchPlayer();
 		
-	    
-//		animManager.setState(AnimState.IDLE);
 	}
 	
 	public void render(Graphics g) {
@@ -103,7 +100,16 @@ public class AngryPig extends LivingEntity{
 			animManager.triggerSingleCycle(AnimState.HIT_1);
 			hurt = true;
 		}
-//		animManager.setState(AnimState.HIT_1);
 	}
+	
+	public void touchPlayer() {
+		Player player = levelManager.getGame().getPlayer();
+		Rectangle2D.Float playerCollisionZone = new Rectangle2D.Float(player.hitbox.x - 1, player.hitbox.y - 1, player.hitbox.width + 2, player.hitbox.height + 1);
+		Rectangle2D.Float enemyCollisionZone = new Rectangle2D.Float(hitbox.x - 1, hitbox.y, hitbox.width + 2, hitbox.height + 1);
+		
+		if(playerCollisionZone.intersects(enemyCollisionZone))
+			player.triggerHit();
+	}
+	
 
 }

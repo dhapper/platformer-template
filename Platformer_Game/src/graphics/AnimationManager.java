@@ -54,12 +54,6 @@ public class AnimationManager {
     }
     
     public void chooseEnemyState() {
-        // HIT lock
-//        if (state == AnimState.HIT_1) {
-//            if (!getCurrentAnimation().isAnimationEnded()) return;
-//            else System.out.println("hi");
-////            else livingEntity.setHurt(false);
-//        }
        
     	if(livingEntity.isHurt()) {
     		changeState(AnimState.HIT_1);
@@ -70,6 +64,8 @@ public class AnimationManager {
         // Default Walk
         changeState(AnimState.WALK);
     }
+    
+    
 
     public void choosePlayerState() {
         // HIT lock

@@ -12,6 +12,7 @@ import graphics.Animation;
 import graphics.AnimationConfig;
 import graphics.AnimationDefinition;
 import graphics.AnimationManager;
+import graphics.ImageModifier;
 import level.LevelManager;
 import systems.Movement;
 import systems.Physics;
@@ -22,31 +23,9 @@ public class Player extends LivingEntity {
 	
 	private boolean upPressed, downPressed, leftPressed, rightPressed;
 	
-//	private int xDrawOffset = (int) (SCALE * 3);
-//	private int yDrawOffset = (int) (SCALE * 4);
-//	private int hitboxWidth = (int) (SCALE * 10);
-//	private int hitboxHeight = (int) (SCALE * 12);
-//	
-//	private int drawSize = (int) (16 * SCALE);
-//	
-//	private ArrayList<Entity> entities;
-//	
-//	private Physics physics;
-//	private Movement movement;
-//	private AnimationManager animManager;
-//	
-//	private boolean invincible = false;da
-//	
-//	// movement/physics
-//	private float speed = 0.5f * SCALE;
-//	private float jump = -1.5f * SCALE;
-//	private float doubleJump = -1f * SCALE;
-//	private float gravity = 0.025f * SCALE;
-//	private float maxFallSpeed = 0.75f * SCALE;
-//	
-//	private Facing facing = Facing.RIGHT;
-//	
-//	private LevelManager levelManager;
+	private boolean invincible = false;
+	private long invincibleEndTime = 0;   // timestamp when invincibility ends
+
 
 	public Player(float x, float y) {
 		super(x, y);
@@ -63,8 +42,6 @@ public class Player extends LivingEntity {
 		yDrawOffset = (int) (SCALE * 8);
 		hitboxWidth = (int) (SCALE * 20);
 		hitboxHeight = (int) (SCALE * 23);
-		
-//		drawSize = (int) (16 * SCALE);	// seems to be size of character
 		
 		speed = 0.5f * SCALE;
 		jump = -1.5f * SCALE;
@@ -89,17 +66,6 @@ public class Player extends LivingEntity {
             new AnimationConfig(AnimState.WALL_JUMP, base + Paths.Player.WALL_JUMP, 5, 10)
         };
     }
-	
-//	private void init() {
-//		this.width = (int) (SCALE * 16);
-//		this.height = (int) (SCALE * 16);
-//		
-//		initHitbox(x, y, hitboxWidth, hitboxHeight);
-//		
-//		physics = new Physics(gravity, maxFallSpeed);
-//		movement = new Movement(speed, jump, doubleJump, this);
-//		animManager = new AnimationManager(this);
-//	}
 
 	public void update() {
 		
@@ -107,13 +73,23 @@ public class Player extends LivingEntity {
 		
 		movement.updatePos(leftPressed, rightPressed);
 		
+		if (invincible && System.currentTimeMillis() >= invincibleEndTime) {
+		    invincible = false;
+		}
+
+		
 		animManager.updatePlayer();
+		
+		
 		
 	}
 	
 	public void render(Graphics g) {
 	    Animation anim = animManager.getCurrentAnimation();
 	    BufferedImage frame = anim.getCurrentSprite();
+	    
+	    if(invincible)
+	    	frame = ImageModifier.MakeImageTransparent(frame, 0.5f);
 
 	    int drawX = (int)(hitbox.x - xDrawOffset);
 	    int drawY = (int)(hitbox.y - yDrawOffset);
@@ -134,13 +110,16 @@ public class Player extends LivingEntity {
 	    if (LevelManager.SHOW_HITBOXES) { drawHitbox(g); }
 	}
 
-	
 	public void triggerHit() {
-		if(invincible) { return; }
-		
-		invincible = true;
-		animManager.triggerSingleCycle(AnimState.HIT);
+	    if (invincible)
+	        return;
+
+	    invincible = true;
+	    invincibleEndTime = System.currentTimeMillis() + 1000; // 1 second
+
+	    animManager.triggerSingleCycle(AnimState.HIT);
 	}
+
 	
 	public void resetDirBools() {
 		upPressed = false;
@@ -188,41 +167,5 @@ public class Player extends LivingEntity {
 	public boolean getRightPressed() {
 		return rightPressed;
 	}
-	
-//	public ArrayList<Entity> getEntities(){
-//		return entities;
-//	}
-//	
-//	public void setEntities(ArrayList<Entity> entities) {
-//		this.entities = entities;
-//	}
-//	
-//	public Physics getPhysics() {
-//		return physics;
-//	}
-//	
-//	public Movement getMovement() {
-//		return movement;
-//	}
-//	
-//	public AnimationManager getAnimManager() {
-//		return animManager;
-//	}
-//	
-//	public LevelManager getLevelManager() {
-//		return levelManager;
-//	}
-//	
-//	public void setInvincible(boolean invincible) {
-//		this.invincible = invincible;
-//	}
-//
-//	public Facing getFacing() {
-//		return facing;
-//	}
-//	
-//	public void setFacing(Facing facing) {
-//		this.facing = facing;
-//	}
 
 }
