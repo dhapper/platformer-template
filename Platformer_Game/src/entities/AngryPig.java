@@ -57,7 +57,7 @@ public class AngryPig extends LivingEntity{
     }
     
 	public void update() {
-		physics.update(hitbox, entities);
+		physics.update(hitbox, levelManager.getEntities());
 		
 		movement.updateEnemyPos();
 		

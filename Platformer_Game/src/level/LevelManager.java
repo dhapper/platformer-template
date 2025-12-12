@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import entities.AngryPig;
 import entities.Entity;
+import entities.LivingEntity;
 import graphics.LevelObjectAnimation;
 import main.Game;
 
@@ -15,16 +16,15 @@ public class LevelManager {
 	private Game game;
 	private MapManager mapManager;
 	
-	private ArrayList<Entity> entities, enemies;
+	private ArrayList<Entity> entities, enemies, tiles;
 	private ArrayList<LevelObjectAnimation> levelObjects;
-	
-	AngryPig ap;
 	
 	public LevelManager(Game game) {
 		this.game = game;
 		
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Entity>();
+		tiles = new ArrayList<Entity>();
 		levelObjects = new ArrayList<LevelObjectAnimation>();
 		
 		mapManager = new MapManager(this);
@@ -32,13 +32,6 @@ public class LevelManager {
 		game.getPlayer().importLevelManager(this);
 		addEntityToList(entities, game.getPlayer());
 		
-		ap = new AngryPig(700, 300);
-		ap.importLevelManager(this);
-		addEntityToList(entities, ap);
-		addEntityToList(enemies, ap);
-		
-		game.getPlayer().setEntities(entities);
-		ap.setEntities(entities);
 	}
 	
 	public void update() {
@@ -50,17 +43,19 @@ public class LevelManager {
 	        }
 	    }
 	    
-	    ap.update();
+	    for(Entity e : enemies)
+	    	e.update();
+	    	
 	}
 	
 	public void render(Graphics g) {
 		mapManager.render(g);
 		
-		ap.render(g);
+		for(Entity e : enemies)
+			e.render(g);
 		
-		for (LevelObjectAnimation loa : levelObjects) {
+		for (LevelObjectAnimation loa : levelObjects)
 			loa.render(g);
-		}
 
 	}
 	
@@ -85,5 +80,8 @@ public class LevelManager {
 	public ArrayList<Entity> getEnemies(){
 		return enemies;
 	}
-
+	
+	public ArrayList<Entity> getTiles(){
+		return tiles;
+	}
 }

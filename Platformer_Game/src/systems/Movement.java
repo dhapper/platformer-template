@@ -35,7 +35,7 @@ public class Movement {
 	
 	public void updateEnemyPos() {
 		Rectangle2D.Float hitbox = livingEntity.getHitbox();
-		ArrayList<Entity> entities = livingEntity.getEntities();
+		ArrayList<Entity> entities = livingEntity.getLevelManager().getEntities();
 		
 	    float newX = hitbox.x;
 	    float newY = hitbox.y;
@@ -66,21 +66,33 @@ public class Movement {
 	    // HORIZONTAL MOVEMENT
 	    // --------------------------
 	    
-	    boolean turn = HelperMethods.ShouldTurn(hitbox, entities, livingEntity);
+//	    boolean turn = HelperMethods.ShouldTurn(hitbox, entities, livingEntity);
+//	    
+//	    if(turn && livingEntity.getFacing() == Facing.LEFT) {
+//	    	livingEntity.setFacing(Facing.RIGHT);
+//	    }else if(turn && livingEntity.getFacing() == Facing.RIGHT) {
+//	    	livingEntity.setFacing(Facing.LEFT);
+//	    }	
+	    
+	    Rectangle2D.Float future;
+	    if(livingEntity.getFacing() == Facing.LEFT) {
+	        future = new Rectangle2D.Float(hitbox.x - speed, hitbox.y, hitbox.width, hitbox.height);
+	        if (HelperMethods.CanMoveHere(future, entities, livingEntity))
+	            newX -= speed;
+	    }else {
+	        future = new Rectangle2D.Float(hitbox.x + speed, hitbox.y, hitbox.width, hitbox.height);
+	        if (HelperMethods.CanMoveHere(future, entities, livingEntity))
+	            newX += speed;
+	    }
+	    
+	    boolean turn = HelperMethods.ShouldTurn(hitbox, entities, livingEntity)
+	    		 || !HelperMethods.CanMoveHere(future, livingEntity.getLevelManager().getEnemies(), livingEntity)
+	    		 || !HelperMethods.CanMoveHere(future, livingEntity.getLevelManager().getTiles(), livingEntity);
+	    
 	    if(turn && livingEntity.getFacing() == Facing.LEFT) {
 	    	livingEntity.setFacing(Facing.RIGHT);
 	    }else if(turn && livingEntity.getFacing() == Facing.RIGHT) {
 	    	livingEntity.setFacing(Facing.LEFT);
-	    }	
-	    
-	    if(livingEntity.getFacing() == Facing.LEFT) {
-	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x - speed, hitbox.y, hitbox.width, hitbox.height);
-	        if (HelperMethods.CanMoveHere(future, entities, livingEntity))
-	            newX -= speed;
-	    }else {
-	        Rectangle2D.Float future = new Rectangle2D.Float(hitbox.x + speed, hitbox.y, hitbox.width, hitbox.height);
-	        if (HelperMethods.CanMoveHere(future, entities, livingEntity))
-	            newX += speed;
 	    }
 	    
 	    
@@ -99,7 +111,7 @@ public class Movement {
 	public void updatePos(boolean leftPressed, boolean rightPressed) {
 		
 		Rectangle2D.Float hitbox = livingEntity.getHitbox();
-		ArrayList<Entity> entities = livingEntity.getEntities();
+		ArrayList<Entity> entities = livingEntity.getLevelManager().getEntities();
 
 	    float newX = hitbox.x;
 	    float newY = hitbox.y;

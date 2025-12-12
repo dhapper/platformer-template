@@ -30,5 +30,13 @@ public abstract class Entity {
 		return hitbox;
 	}
 	
+	public void update() {
+		
+	}
+	
+	public void render(Graphics g) {
+		
+	}
+	
 
 }

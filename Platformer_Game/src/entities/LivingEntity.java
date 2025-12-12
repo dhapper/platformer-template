@@ -44,8 +44,8 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 	protected float maxFallSpeed;
 	protected Facing facing;
 	
-	protected ArrayList<Entity> entities;
-	protected ArrayList<Entity> livingEntities;
+//	protected ArrayList<Entity> entities;
+//	protected ArrayList<Entity> livingEntities;
 	protected Physics physics;
 	protected Movement movement;
 	protected AnimationManager animManager;
@@ -77,13 +77,13 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 	
 	// getters and setters
 	
-	public ArrayList<Entity> getEntities(){
-		return entities;
-	}
-	
-	public void setEntities(ArrayList<Entity> entities) {
-		this.entities = entities;
-	}
+//	public ArrayList<Entity> getEntities(){
+//		return entities;
+//	}
+//	
+//	public void setEntities(ArrayList<Entity> entities) {
+//		this.entities = entities;
+//	}
 	
 	public Physics getPhysics() {
 		return physics;

@@ -69,7 +69,7 @@ public class Player extends LivingEntity {
 
 	public void update() {
 		
-		physics.update(hitbox, entities);
+		physics.update(hitbox, levelManager.getEntities());
 		
 		movement.updatePos(leftPressed, rightPressed);
 		
