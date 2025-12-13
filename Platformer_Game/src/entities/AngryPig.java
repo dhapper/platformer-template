@@ -68,11 +68,11 @@ public class AngryPig extends LivingEntity{
 		
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics g, int xLocationOffset) {
 	    Animation anim = animManager.getCurrentAnimation();
 	    BufferedImage frame = anim.getCurrentSprite();
 
-	    int drawX = (int)(hitbox.x - xDrawOffset);
+	    int drawX = (int)(hitbox.x - xDrawOffset - xLocationOffset);
 	    int drawY = (int)(hitbox.y - yDrawOffset);
 
 	    if (getFacing() == Facing.LEFT) {

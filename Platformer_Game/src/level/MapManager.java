@@ -32,8 +32,8 @@ public class MapManager {
 	public MapManager(LevelManager levelManager) {
 		this.levelManager = levelManager;
 		
-		map = MapLoader.LoadMapFromCSV("res/Levels/LEVEL_2.csv");
-		enemyMap = MapLoader.LoadMapFromCSV("res/Levels/ENEMY_MAP_2.csv");
+		map = MapLoader.LoadMapFromCSV("res/Levels/LEVEL_3.csv");
+		enemyMap = MapLoader.LoadMapFromCSV("res/Levels/ENEMY_MAP_3.csv");
 		
 		tileSheet = LoadSave.ImportImg(Constants.ResourcePaths.TILES);
 		
@@ -85,7 +85,7 @@ public class MapManager {
 	    }
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics g, int xLocationOffset) {
 		
 		g.setColor(new Color(200, 200, 220));
 		g.fillRect(0, 0, Constants.General.SCREEN_WIDTH, Constants.General.SCREEN_HEIGHT);
@@ -96,9 +96,17 @@ public class MapManager {
 	        for (int i = 0; i < cols; i++) {
 	        	Tile currentTile = tileMap[j][i];
 	        	if(currentTile.getHitbox() != null) {
+	        		int screenLeft  = xLocationOffset;
+	        		int screenRight = xLocationOffset + Constants.General.SCREEN_WIDTH;
+	        		
+	        		float tileLeft  = currentTile.getHitbox().x;
+	        		float tileRight = currentTile.getHitbox().x + currentTile.getHitbox().width;
+
+	        		if (tileRight < screenLeft || tileLeft > screenRight) { continue; }
+
 	        		g.drawImage(
 	        				tiles[currentTile.getId()],
-	        				(int) currentTile.getHitbox().x,
+	        				(int) currentTile.getHitbox().x - xLocationOffset,
 	        				(int) currentTile.getHitbox().y,
 	        				(int) currentTile.getHitbox().width,
 	        				(int) currentTile.getHitbox().height,
@@ -107,6 +115,10 @@ public class MapManager {
 	        	}
 	        }
 	    }
+	}
+	
+	public int[][] getMap(){
+		return map;
 	}
 	
 

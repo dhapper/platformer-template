@@ -56,8 +56,8 @@ public class LevelObjectAnimation {
         }
     }
     
-    public void render(Graphics g) {
-    	g.drawImage(sprites[index], x, y, (int) (width * Constants.General.SCALE), (int) (height * Constants.General.SCALE), null);
+    public void render(Graphics g, int xLocationOffset) {
+    	g.drawImage(sprites[index], x - xLocationOffset, y, (int) (width * Constants.General.SCALE), (int) (height * Constants.General.SCALE), null);
     }
 
 	private void loadSprites(String path, int frames, int width, int height) {

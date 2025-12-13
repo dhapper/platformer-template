@@ -84,14 +84,14 @@ public class Player extends LivingEntity {
 		
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics g, int xLocationOffset) {
 	    Animation anim = animManager.getCurrentAnimation();
 	    BufferedImage frame = anim.getCurrentSprite();
 	    
 	    if(invincible)
 	    	frame = ImageModifier.MakeImageTransparent(frame, 0.5f);
 
-	    int drawX = (int)(hitbox.x - xDrawOffset);
+	    int drawX = (int)(hitbox.x - xDrawOffset - xLocationOffset);
 	    int drawY = (int)(hitbox.y - yDrawOffset);
 
 	    if (getFacing() == Facing.LEFT) {
