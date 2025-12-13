@@ -13,20 +13,6 @@ import systems.Physics;
 
 public abstract class LivingEntity extends Entity implements AnimationDefinition{
 
-//	protected int xDrawOffset = (int) (SCALE * 3);
-//	protected int yDrawOffset = (int) (SCALE * 4);
-//	protected int hitboxWidth = (int) (SCALE * 10);
-//	protected int hitboxHeight = (int) (SCALE * 12);
-//
-//	protected int drawSize = (int) (16 * SCALE);
-//	
-//	// movement/physics
-//	protected float speed = 0.5f * SCALE;
-//	protected float jump = -1.5f * SCALE;
-//	protected float doubleJump = -1f * SCALE;
-//	protected float gravity = 0.025f * SCALE;
-//	protected float maxFallSpeed = 0.75f * SCALE;
-
 	protected int xDrawOffset;
 	protected int yDrawOffset;
 	protected int hitboxWidth;
@@ -44,8 +30,6 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 	protected float maxFallSpeed;
 	protected Facing facing;
 	
-//	protected ArrayList<Entity> entities;
-//	protected ArrayList<Entity> livingEntities;
 	protected Physics physics;
 	protected Movement movement;
 	protected AnimationManager animManager;
@@ -61,8 +45,6 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 	}
 	
 	protected void initLivingEntity() {
-//		this.width = (int) (SCALE * 16);
-//		this.height = (int) (SCALE * 16);
 		
 		initHitbox(x, y, hitboxWidth, hitboxHeight);
 		
@@ -77,13 +59,6 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 	
 	// getters and setters
 	
-//	public ArrayList<Entity> getEntities(){
-//		return entities;
-//	}
-//	
-//	public void setEntities(ArrayList<Entity> entities) {
-//		this.entities = entities;
-//	}
 	
 	public Physics getPhysics() {
 		return physics;

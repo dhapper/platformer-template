@@ -57,7 +57,6 @@ public class Movement {
 	    }
 	    
 	    if(!physics.isOnGround() || livingEntity.isHurt()) {
-//	    	livingEntity.getAnimManager().setState(AnimState.IDLE);
 	    	hitbox.y = newY;
 	    	return;
 	    }
@@ -65,14 +64,7 @@ public class Movement {
 	    // --------------------------
 	    // HORIZONTAL MOVEMENT
 	    // --------------------------
-	    
-//	    boolean turn = HelperMethods.ShouldTurn(hitbox, entities, livingEntity);
-//	    
-//	    if(turn && livingEntity.getFacing() == Facing.LEFT) {
-//	    	livingEntity.setFacing(Facing.RIGHT);
-//	    }else if(turn && livingEntity.getFacing() == Facing.RIGHT) {
-//	    	livingEntity.setFacing(Facing.LEFT);
-//	    }	
+	
 	    
 	    Rectangle2D.Float future;
 	    if(livingEntity.getFacing() == Facing.LEFT) {
@@ -94,12 +86,6 @@ public class Movement {
 	    }else if(turn && livingEntity.getFacing() == Facing.RIGHT) {
 	    	livingEntity.setFacing(Facing.LEFT);
 	    }
-	    
-	    
-//	    if(newX != 0)
-//	    	livingEntity.getAnimManager().setState(AnimState.WALK);
-//	    else
-//	    	livingEntity.getAnimManager().setState(AnimState.IDLE);
 
 	    // --------------------------
 	    // APPLY MOVEMENT

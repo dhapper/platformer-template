@@ -4,9 +4,7 @@ import java.awt.Graphics;
 
 import java.util.ArrayList;
 
-import entities.AngryPig;
 import entities.Entity;
-import entities.LivingEntity;
 import graphics.LevelObjectAnimation;
 import main.Game;
 import utilz.Constants;
