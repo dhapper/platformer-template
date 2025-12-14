@@ -79,6 +79,11 @@ public class LevelManager {
 
 	}
 	
+	private void changeMap() {
+		// update player pos
+		//update map manager
+	}
+	
 	private void updateOffset() {
 		int playerX = (int) game.getPlayer().getHitbox().x;
 	    int xDiff = playerX - xLocationOffset;

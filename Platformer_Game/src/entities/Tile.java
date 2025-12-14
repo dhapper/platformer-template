@@ -1,6 +1,7 @@
 package entities;
 
 import static utilz.Constants.General.*;
+import static utilz.Constants.TileConstants.*;
 
 public class Tile extends Entity{
 
@@ -13,14 +14,20 @@ public class Tile extends Entity{
 		this.width = (int) (16 * SCALE);
 		this.height = (int) (16 * SCALE);
 		
-		if(id != 5) {
+		if(EMPTY_SPACES.contains(id))
+			id = DEFAULT_AIR_ID;
+
+		if(id != DEFAULT_AIR_ID)
 			initHitbox(x, y, width, height);
-		}
 		
 	}
 	
 	public int getId() {
 		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

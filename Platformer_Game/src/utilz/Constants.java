@@ -1,5 +1,8 @@
 package utilz;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Constants {
 	
 	
@@ -21,6 +24,9 @@ public class Constants {
 	public static class TileConstants {
 		public static final int DEFAULT_TERRAIN_TILE_SIZE = 16;
 		public static final int TERRAIN_TILE_SIZE = (int) (DEFAULT_TERRAIN_TILE_SIZE * General.SCALE);
+		
+		public static final int DEFAULT_AIR_ID = 5;
+		public static final Set<Integer> EMPTY_SPACES = Set.of(DEFAULT_AIR_ID, -1); 
 	}
 	
 	

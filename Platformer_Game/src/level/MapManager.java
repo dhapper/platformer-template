@@ -1,14 +1,14 @@
 package level;
 
-import static utilz.Constants.TileConstants.DEFAULT_TERRAIN_TILE_SIZE;
-import static utilz.Constants.TileConstants.TERRAIN_TILE_SIZE;
+import static utilz.Constants.TileConstants.*;
+import static utilz.Constants.General.*;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import entities.AngryPig;
 import entities.Tile;
+import enums.BgColour;
 import utilz.Constants;
 import utilz.LoadSave;
 import utilz.MapLoader;
@@ -29,14 +29,18 @@ public class MapManager {
 	
 	private LevelManager levelManager;
 	
+	private BufferedImage[] backgrounds;
+	private BgColour bgColour = BgColour.PINK;
+	
 	public MapManager(LevelManager levelManager) {
 		this.levelManager = levelManager;
 		
-		map = MapLoader.LoadMapFromCSV("res/Levels/LEVEL_3.csv");
-		enemyMap = MapLoader.LoadMapFromCSV("res/Levels/ENEMY_MAP_3.csv");
+		map = MapLoader.LoadMapFromCSV("res/Levels/LEVEL_4.csv");
+		enemyMap = MapLoader.LoadMapFromCSV("res/Levels/ENEMY_MAP_4.csv");
 		
 		tileSheet = LoadSave.ImportImg(Constants.ResourcePaths.TILES);
 		
+		loadBackgrounds();
 		prepTiles();
 		prepTileMap();
 		loadEnemies();
@@ -63,6 +67,7 @@ public class MapManager {
 	    for (int j = 0; j < rows; j++) {
 	        for (int i = 0; i < cols; i++) {
 	        	tileMap[j][i] = new Tile(TERRAIN_TILE_SIZE * i, TERRAIN_TILE_SIZE * j, map[j][i]);
+//	        	if(tileMap[j][i].getId() == -1) tileMap[j][i].setId(5);
 	        	levelManager.addEntityToList(levelManager.getEntities(), tileMap[j][i]);
 	        	levelManager.addEntityToList(levelManager.getTiles(), tileMap[j][i]);
 	        }
@@ -87,14 +92,17 @@ public class MapManager {
 	
 	public void render(Graphics g, int xLocationOffset) {
 		
-		g.setColor(new Color(200, 200, 220));
-		g.fillRect(0, 0, Constants.General.SCREEN_WIDTH, Constants.General.SCREEN_HEIGHT);
+//		g.setColor(new Color(200, 200, 220));
+//		g.fillRect(0, 0, Constants.General.SCREEN_WIDTH, Constants.General.SCREEN_HEIGHT);
+		
+		paintBackground(g);
 		
 	    int rows = tileMap.length;
 	    int cols = tileMap[0].length;
 	    for (int j = 0; j < rows; j++) {
 	        for (int i = 0; i < cols; i++) {
 	        	Tile currentTile = tileMap[j][i];
+//	        	if(currentTile.getId() == -1) { continue; }
 	        	if(currentTile.getHitbox() != null) {
 	        		int screenLeft  = xLocationOffset;
 	        		int screenRight = xLocationOffset + Constants.General.SCREEN_WIDTH;
@@ -117,8 +125,33 @@ public class MapManager {
 	    }
 	}
 	
+	private void paintBackground(Graphics g) {
+		for(int i = 0; i < GAME_TILES_WIDE; i++) {
+			for(int j = 0; j < GAME_TILES_HIGH; j++) {
+				g.drawImage(backgrounds[bgColour.ordinal()], i * TERRAIN_TILE_SIZE, j * TERRAIN_TILE_SIZE, TERRAIN_TILE_SIZE, TERRAIN_TILE_SIZE, null);
+			}
+		}
+		
+	}
+	
+	private void loadBackgrounds() {
+		backgrounds = new BufferedImage[BgColour.values().length];
+		backgrounds[BgColour.BLUE.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Blue.png");
+		backgrounds[BgColour.BROWN.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Brown.png");
+		backgrounds[BgColour.GRAY.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Gray.png");
+		backgrounds[BgColour.GREEN.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Green.png");
+		backgrounds[BgColour.PINK.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Pink.png");
+		backgrounds[BgColour.PURPLE.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Purple.png");
+		backgrounds[BgColour.YELLOW.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Yellow.png");
+		
+	}
+
 	public int[][] getMap(){
 		return map;
+	}
+	
+	public void setBgColour(BgColour bgColour) {
+		this.bgColour = bgColour;
 	}
 	
 
