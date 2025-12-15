@@ -98,6 +98,10 @@ public class Game implements Runnable{
 		return player;
 	}
 	
+	public LevelManager getLevelManager() {
+		return levelManager;
+	}
+	
 	public void windowFocusLost() {
 		player.resetDirBools();
 		

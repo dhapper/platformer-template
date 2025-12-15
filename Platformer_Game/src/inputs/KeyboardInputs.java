@@ -33,6 +33,9 @@ public class KeyboardInputs implements KeyListener {
             case KeyEvent.VK_SPACE -> player.getMovement().jump();
             case KeyEvent.VK_R -> player.respawn();
             
+            case KeyEvent.VK_4 -> gamePanel.getGame().getLevelManager().loadLevel(4);
+            case KeyEvent.VK_5 -> gamePanel.getGame().getLevelManager().loadLevel(5);
+            
         }
     }
 

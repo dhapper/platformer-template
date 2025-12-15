@@ -42,10 +42,8 @@ public class LevelManager {
 		game.getPlayer().importLevelManager(this);
 		addEntityToList(entities, game.getPlayer());
 		
-		// update screen offset vars
-		locationTilesWide = mapManager.getMap()[0].length;
-		maxTilesOffsetX = locationTilesWide - GAME_TILES_WIDE;
-		maxLocationOffsetX = maxTilesOffsetX * Constants.TileConstants.TERRAIN_TILE_SIZE;
+		loadLevel(5);
+
 		
 	}
 	
@@ -79,9 +77,21 @@ public class LevelManager {
 
 	}
 	
-	private void changeMap() {
-		// update player pos
-		//update map manager
+	public void loadLevel(int level) {
+		entities = new ArrayList<Entity>();
+		enemies = new ArrayList<Entity>();
+		tiles = new ArrayList<Entity>();
+		levelObjects = new ArrayList<LevelObjectAnimation>();
+		
+		mapManager.loadLevel(level);
+		int x = mapManager.getLevelDataArray()[level-1].x();
+		int y = mapManager.getLevelDataArray()[level-1].y();
+		game.getPlayer().setPosByTile(x, y);
+		
+		// update screen offset vars
+		locationTilesWide = mapManager.getMap()[0].length;
+		maxTilesOffsetX = locationTilesWide - GAME_TILES_WIDE;
+		maxLocationOffsetX = maxTilesOffsetX * Constants.TileConstants.TERRAIN_TILE_SIZE;
 	}
 	
 	private void updateOffset() {
@@ -124,5 +134,9 @@ public class LevelManager {
 	
 	public ArrayList<Entity> getTiles(){
 		return tiles;
+	}
+	
+	public MapManager getMapManager() {
+		return mapManager;
 	}
 }

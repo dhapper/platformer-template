@@ -32,18 +32,30 @@ public class MapManager {
 	private BufferedImage[] backgrounds;
 	private BgColour bgColour = BgColour.PINK;
 	
+	private LevelData[] levelDataArray;
+	
 	public MapManager(LevelManager levelManager) {
 		this.levelManager = levelManager;
-		
-		map = MapLoader.LoadMapFromCSV("res/Levels/LEVEL_4.csv");
-		enemyMap = MapLoader.LoadMapFromCSV("res/Levels/ENEMY_MAP_4.csv");
 		
 		tileSheet = LoadSave.ImportImg(Constants.ResourcePaths.TILES);
 		
 		loadBackgrounds();
 		prepTiles();
+		initLevelData();
+	}
+	
+	private void initLevelData(){
+		levelDataArray = new LevelData[5];
+		levelDataArray[3] = new LevelData(4, 4, BgColour.BLUE);
+		levelDataArray[4] = new LevelData(4, 4, BgColour.PINK);
+	}
+	
+	public void loadLevel(int level) {
+		map = MapLoader.LoadMapFromCSV("res/Levels/LEVEL_" + level + ".csv");
+		enemyMap = MapLoader.LoadMapFromCSV("res/Levels/ENEMY_MAP_" + level + ".csv");
 		prepTileMap();
 		loadEnemies();
+		bgColour = levelDataArray[level-1].bgColour();
 	}
 	
 	public void prepTiles() {
@@ -67,7 +79,6 @@ public class MapManager {
 	    for (int j = 0; j < rows; j++) {
 	        for (int i = 0; i < cols; i++) {
 	        	tileMap[j][i] = new Tile(TERRAIN_TILE_SIZE * i, TERRAIN_TILE_SIZE * j, map[j][i]);
-//	        	if(tileMap[j][i].getId() == -1) tileMap[j][i].setId(5);
 	        	levelManager.addEntityToList(levelManager.getEntities(), tileMap[j][i]);
 	        	levelManager.addEntityToList(levelManager.getTiles(), tileMap[j][i]);
 	        }
@@ -91,10 +102,6 @@ public class MapManager {
 	}
 	
 	public void render(Graphics g, int xLocationOffset) {
-		
-//		g.setColor(new Color(200, 200, 220));
-//		g.fillRect(0, 0, Constants.General.SCREEN_WIDTH, Constants.General.SCREEN_HEIGHT);
-		
 		paintBackground(g);
 		
 	    int rows = tileMap.length;
@@ -102,7 +109,6 @@ public class MapManager {
 	    for (int j = 0; j < rows; j++) {
 	        for (int i = 0; i < cols; i++) {
 	        	Tile currentTile = tileMap[j][i];
-//	        	if(currentTile.getId() == -1) { continue; }
 	        	if(currentTile.getHitbox() != null) {
 	        		int screenLeft  = xLocationOffset;
 	        		int screenRight = xLocationOffset + Constants.General.SCREEN_WIDTH;
@@ -150,9 +156,8 @@ public class MapManager {
 		return map;
 	}
 	
-	public void setBgColour(BgColour bgColour) {
-		this.bgColour = bgColour;
+	public LevelData[] getLevelDataArray() {
+		return levelDataArray;
 	}
-	
 
 }

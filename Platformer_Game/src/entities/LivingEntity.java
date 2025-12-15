@@ -10,6 +10,7 @@ import graphics.AnimationManager;
 import level.LevelManager;
 import systems.Movement;
 import systems.Physics;
+import utilz.Constants;
 
 public abstract class LivingEntity extends Entity implements AnimationDefinition{
 
@@ -55,6 +56,11 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 	
 	public void importLevelManager(LevelManager levelManager) {
 		this.levelManager = levelManager;
+	}
+	
+	public void setPosByTile(int x, int y){
+		hitbox.x = x * Constants.TileConstants.TERRAIN_TILE_SIZE;
+		hitbox.y = y * Constants.TileConstants.TERRAIN_TILE_SIZE;
 	}
 	
 	// getters and setters

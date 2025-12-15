@@ -130,8 +130,8 @@ public class Player extends LivingEntity {
 	}
 	
 	public void respawn() {
-		hitbox.x = 100;
-		hitbox.y = 100;
+		hitbox.x = 4 * Constants.TileConstants.TERRAIN_TILE_SIZE;
+		hitbox.y = 4 * Constants.TileConstants.TERRAIN_TILE_SIZE;
 	}
 	
 	// getters and setters
