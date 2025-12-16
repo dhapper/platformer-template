@@ -27,6 +27,12 @@ public class Constants {
 		
 		public static final int DEFAULT_AIR_ID = 5;
 		public static final Set<Integer> EMPTY_SPACES = Set.of(DEFAULT_AIR_ID, -1); 
+		
+		public static final Set<Integer> DROP_THROUGH_TILES = Set.of(
+				17, 18, 19,
+				17+22, 18+22, 19+22,
+				17+44, 18+44, 19+44
+				); 
 	}
 	
 	

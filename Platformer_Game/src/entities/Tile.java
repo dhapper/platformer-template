@@ -20,6 +20,10 @@ public class Tile extends Entity{
 		if(id != DEFAULT_AIR_ID)
 			initHitbox(x, y, width, height);
 		
+		if(DROP_THROUGH_TILES.contains(id)) {
+			initHitbox(x, y, width, 10);
+		}
+		
 	}
 	
 	public int getId() {

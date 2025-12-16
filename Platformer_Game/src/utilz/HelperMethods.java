@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import entities.Entity;
 import entities.LivingEntity;
+import entities.Player;
+import entities.Tile;
 import enums.Facing;
 
 public class HelperMethods {
@@ -15,6 +17,23 @@ public class HelperMethods {
 		
 		for(Entity entity : entities) {
 			if(entity == livingEntity) { continue; }
+			
+			if(livingEntity instanceof Player) {
+				// for drop through tiles
+				Player player = (Player) livingEntity;
+				boolean rising = futureHitbox.x < livingEntity.getHitbox().x;
+				if(entity instanceof Tile) {
+					Tile tile = (Tile) entity;
+					if(Constants.TileConstants.DROP_THROUGH_TILES.contains(tile.getId())) {
+						boolean passedThrough = player.getHitbox().y + player.getHitbox().height > tile.getHitbox().y;
+						if(player.getDownPressed() || rising || passedThrough) { continue; }
+					}	
+				}
+				
+				// for enemies during invincibility
+				if(player.isInvincible() && entity instanceof LivingEntity) { continue; }
+			}
+			
 			if(entity.getHitbox() == null) { continue; }
 			if(futureHitbox.intersects(entity.getHitbox())) { return false; }
 		}

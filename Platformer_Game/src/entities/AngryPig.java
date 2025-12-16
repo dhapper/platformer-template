@@ -88,7 +88,7 @@ public class AngryPig extends LivingEntity{
         );
 	    }
 
-	    if (LevelManager.SHOW_HITBOXES) { drawHitbox(g); }
+	    if (LevelManager.SHOW_HITBOXES) { drawHitbox(g, xLocationOffset); }
 	}
 	
 	public void jumpedOn() {

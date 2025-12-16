@@ -107,7 +107,7 @@ public class Player extends LivingEntity {
 	        g.drawImage(frame, drawX, drawY, (int) (spriteWidth*SCALE), (int) (spriteHeight*SCALE), null);
 	    }
 
-	    if (LevelManager.SHOW_HITBOXES) { drawHitbox(g); }
+	    if (LevelManager.SHOW_HITBOXES) { drawHitbox(g, xLocationOffset); }
 	}
 
 	public void triggerHit() {
@@ -166,6 +166,10 @@ public class Player extends LivingEntity {
 	
 	public boolean getRightPressed() {
 		return rightPressed;
+	}
+	
+	public boolean isInvincible() {
+		return invincible;
 	}
 
 }

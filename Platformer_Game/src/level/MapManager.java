@@ -122,10 +122,12 @@ public class MapManager {
 	        				tiles[currentTile.getId()],
 	        				(int) currentTile.getHitbox().x - xLocationOffset,
 	        				(int) currentTile.getHitbox().y,
-	        				(int) currentTile.getHitbox().width,
-	        				(int) currentTile.getHitbox().height,
+	        				TERRAIN_TILE_SIZE,
+	        				TERRAIN_TILE_SIZE,
+//	        				(int) currentTile.getHitbox().width,
+//	        				(int) currentTile.getHitbox().height,
 	        				null);
-	        		if(LevelManager.SHOW_HITBOXES) { currentTile.drawHitbox(g); }
+	        		if(LevelManager.SHOW_HITBOXES) { currentTile.drawHitbox(g, xLocationOffset); }
 	        	}
 	        }
 	    }
