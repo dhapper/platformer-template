@@ -1,6 +1,5 @@
 package utilz;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ public class HelperMethods {
 		for(Entity entity : entities) {
 			if(entity == livingEntity) { continue; }
 			
+			// player specific checks
 			if(livingEntity instanceof Player) {
 				// for drop through tiles
 				Player player = (Player) livingEntity;

@@ -1,21 +1,22 @@
 package level;
 
-import java.awt.Graphics;
+import static utilz.Constants.General.GAME_TILES_WIDE;
+import static utilz.Constants.General.SCREEN_WIDTH;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import entities.Entity;
+import entities.Player;
 import graphics.LevelObjectAnimation;
 import main.Game;
 import utilz.Constants;
-
-import static utilz.Constants.General.*;
 
 public class LevelManager {
 	
 	public static boolean SHOW_HITBOXES = false;
 	
-	private Game game;
+	private Player player;
 	private MapManager mapManager;
 	
 	private ArrayList<Entity> entities, enemies, tiles;
@@ -29,8 +30,8 @@ public class LevelManager {
 	private int maxTilesOffsetX;
 	private int maxLocationOffsetX;
 	
-	public LevelManager(Game game) {
-		this.game = game;
+	public LevelManager(Player player) {
+		this.player = player;
 		
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Entity>();
@@ -39,8 +40,8 @@ public class LevelManager {
 		
 		mapManager = new MapManager(this);
 		
-		game.getPlayer().importLevelManager(this);
-		addEntityToList(entities, game.getPlayer());
+		player.importLevelManager(this);
+		addEntityToList(entities, player);
 		
 		loadLevel(5);
 
@@ -70,7 +71,7 @@ public class LevelManager {
 		for(Entity e : enemies)
 			e.render(g, xLocationOffset);
 		
-		game.getPlayer().render(g, xLocationOffset);
+		player.render(g, xLocationOffset);
 		
 		for (LevelObjectAnimation loa : levelObjects)
 			loa.render(g, xLocationOffset);
@@ -86,7 +87,7 @@ public class LevelManager {
 		mapManager.loadLevel(level);
 		int x = mapManager.getLevelDataArray()[level-1].x();
 		int y = mapManager.getLevelDataArray()[level-1].y();
-		game.getPlayer().setPosByTile(x, y);
+		player.setPosByTile(x, y);
 		
 		// update screen offset vars
 		locationTilesWide = mapManager.getMap()[0].length;
@@ -95,7 +96,7 @@ public class LevelManager {
 	}
 	
 	private void updateOffset() {
-		int playerX = (int) game.getPlayer().getHitbox().x;
+		int playerX = (int) player.getHitbox().x;
 	    int xDiff = playerX - xLocationOffset;
 	    
 	    if(xDiff > rightBorder)
@@ -120,8 +121,8 @@ public class LevelManager {
 	
 	// getters and setters
 	
-	public Game getGame() {
-		return game;
+	public Player getPlayer() {
+		return player;
 	}
 	
 	public ArrayList<Entity> getEntities(){

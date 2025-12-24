@@ -3,6 +3,9 @@ package main;
 import java.awt.Graphics;
 
 import entities.Player;
+import enums.Gamestate;
+import gamestates.Menu;
+import gamestates.Playing;
 import level.LevelManager;
 
 public class Game implements Runnable{
@@ -13,8 +16,8 @@ public class Game implements Runnable{
 	private final int FPS_SET = 120;
 	private final int UPS_SET = 200;
 	
-	private LevelManager levelManager;
-	private Player player;
+	private Playing playing;
+	private Menu menu;
 	
 	public Game() {
 		initClasses();
@@ -27,9 +30,8 @@ public class Game implements Runnable{
 	}
 	
 	private void initClasses() {
-		player = new Player(50, 50);
-		levelManager = new LevelManager(this);
-		
+		menu = new Menu(this);
+		playing = new Playing(this);
 	}
 
 	private void startGameLoop(){
@@ -38,14 +40,32 @@ public class Game implements Runnable{
 	}
 	
 	public void update() {
-		player.update();
-		levelManager.update();
+
+		switch(Gamestate.state) {
+		case MENU:
+			menu.update();
+			break;
+		case PLAYING:
+			playing.update();
+//			gamePanel.updateGame();
+			break;
+		default:
+			break;
+		}
 		
-		gamePanel.updateGame();
 	}
 	
 	public void render(Graphics g) {
-		levelManager.render(g);
+		switch(Gamestate.state) {
+		case MENU:
+			menu.render(g);
+			break;
+		case PLAYING:
+			playing.render(g);
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -84,7 +104,7 @@ public class Game implements Runnable{
 			
 			if(System.currentTimeMillis() - lastCheck >= 1000) {
 				lastCheck = System.currentTimeMillis();
-//				System.out.println("FPS: " + frames + " | UPS: " + updates);
+				// System.out.println("FPS: " + frames + " | UPS: " + updates);
 				frames = 0;
 				updates = 0;
 			}
@@ -94,17 +114,19 @@ public class Game implements Runnable{
 		
 	}
 	
-	public Player getPlayer() {
-		return player;
-	}
-	
-	public LevelManager getLevelManager() {
-		return levelManager;
-	}
-	
 	public void windowFocusLost() {
-		player.resetDirBools();
-		
+		if(Gamestate.state == Gamestate.PLAYING)
+			playing.getPlayer().resetDirBools();
+	}
+	
+	// getter sand setters
+	
+	public Playing getPlaying() {
+		return playing;
+	}
+	
+	public Menu getMenu() {
+		return menu;
 	}
 
 }

@@ -92,7 +92,7 @@ public class AngryPig extends LivingEntity{
 	}
 	
 	public void jumpedOn() {
-		Player player = levelManager.getGame().getPlayer();
+		Player player = levelManager.getPlayer();
 		Rectangle2D.Float playerFoot = new Rectangle2D.Float(player.hitbox.x, player.hitbox.y + player.hitbox.height, player.hitbox.width, 1);
 		Rectangle2D.Float enemyHead = new Rectangle2D.Float(hitbox.x, hitbox.y - 1, hitbox.width, 1);
 		if(playerFoot.intersects(enemyHead)) {
@@ -103,7 +103,7 @@ public class AngryPig extends LivingEntity{
 	}
 	
 	public void touchPlayer() {
-		Player player = levelManager.getGame().getPlayer();
+		Player player = levelManager.getPlayer();
 		Rectangle2D.Float playerCollisionZone = new Rectangle2D.Float(player.hitbox.x - 1, player.hitbox.y - 1, player.hitbox.width + 2, player.hitbox.height + 1);
 		Rectangle2D.Float enemyCollisionZone = new Rectangle2D.Float(hitbox.x - 1, hitbox.y, hitbox.width + 2, hitbox.height + 1);
 		
