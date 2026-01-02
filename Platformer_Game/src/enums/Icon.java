@@ -1,0 +1,18 @@
+package enums;
+
+public enum Icon {
+
+	ACHIEVEMENTS,
+	BACK,
+	CLOSE,
+	LEADERBOARD,
+	LEVELS,
+	NEXT,
+	PLAY,
+	PREVIOUS,
+	RESTART,
+	SETTINGS,
+	VOLUME,
+	
+	
+}

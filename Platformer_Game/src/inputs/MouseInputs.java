@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import enums.Gamestate;
 import main.GamePanel;
 
 public class MouseInputs implements MouseListener, MouseMotionListener{
@@ -22,7 +23,18 @@ private GamePanel gamePanel;
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-//		gamePanel.setRectPos(e.getX(), e.getY());
+
+		switch(Gamestate.state) {
+    	case MENU:
+    		gamePanel.getGame().getMenu().mouseMoved(e);
+    		break;
+    	case PLAYING:
+    		gamePanel.getGame().getPlaying().mouseMoved(e);
+    		break;
+    	default:
+    		break;
+    		
+    	}
 		
 	}
 
@@ -34,13 +46,33 @@ private GamePanel gamePanel;
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
+		switch(Gamestate.state) {
+    	case MENU:
+    		gamePanel.getGame().getMenu().mousePressed(e);
+    		break;
+    	case PLAYING:
+    		gamePanel.getGame().getPlaying().mousePressed(e);
+    		break;
+    	default:
+    		break;
+    	}
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
+		switch(Gamestate.state) {
+    	case MENU:
+    		gamePanel.getGame().getMenu().mouseReleased(e);
+    		break;
+    	case PLAYING:
+    		gamePanel.getGame().getPlaying().mouseReleased(e);
+    		break;
+    	default:
+    		break;
+    	}
 		
 	}
 

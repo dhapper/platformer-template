@@ -42,6 +42,8 @@ public class Constants {
 		public static final String BACKGROUND = "/Pixel Adventure Assets/Background/";
 		
 		public static final String ENEMIES = "/Pixel Adventure Assets/Enemies/";
+		
+		public static final String MENU_BUTTONS = "/Pixel Adventure Assets/Menu/Buttons/";
 	}
 	
 	
