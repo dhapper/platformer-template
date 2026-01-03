@@ -35,6 +35,24 @@ public class Constants {
 				); 
 	}
 	
+	public static class UI {
+		
+		public static class WHITE_BUTTON {
+			public static final int DEFAULT_ICON_BUTTON_WIDTH = 21;
+			public static final int DEFAULT_ICON_BUTTON_HEIGHT = 22; 
+			public static final int ICON_BUTTON_WIDTH =  (int) (DEFAULT_ICON_BUTTON_WIDTH * General.SCALE);
+			public static final int ICON_BUTTON_HEIGHT = (int) (DEFAULT_ICON_BUTTON_HEIGHT * General.SCALE);
+		}
+		
+		public static class RED_BUTTON {
+			public static final int DEFAULT_ICON_BUTTON_WIDTH = 15;
+			public static final int DEFAULT_ICON_BUTTON_HEIGHT = 16; 
+			public static final int ICON_BUTTON_WIDTH =  (int) (DEFAULT_ICON_BUTTON_WIDTH * General.SCALE);
+			public static final int ICON_BUTTON_HEIGHT = (int) (DEFAULT_ICON_BUTTON_HEIGHT * General.SCALE);
+		}
+		
+	}
+	
 	
 	public static class ResourcePaths {
 		public static final String MAIN_CHARACTERS = "/Pixel Adventure Assets/Main Characters/";

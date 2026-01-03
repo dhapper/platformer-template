@@ -24,10 +24,14 @@ public class Menu extends State implements Statemethods {
 	}
 	
 	private void loadButtons() {
-		buttons = new Button[2];
+		buttons = new Button[6];
 		
 		buttons[0] = new IconButton(100, 100, Icon.PLAY);
-		buttons[1] = new IconButton(200, 100, Icon.PLAY);
+		buttons[1] = new IconButton(200, 100, Icon.NEXT);
+		buttons[2] = new IconButton(300, 100, Icon.BACK);
+		buttons[3] = new IconButton(400, 100, Icon.CLOSE);
+		buttons[4] = new IconButton(500, 100, Icon.LEVELS);
+		buttons[5] = new IconButton(600, 100, Icon.VOLUME);
 	}
 
 	@Override

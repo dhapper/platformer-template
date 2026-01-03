@@ -14,7 +14,6 @@ public class State {
 	}
 	
 	public boolean isIn(MouseEvent e, Button b) {
-		System.out.println(b.getBounds() + " | " + e.getX() + " " + e.getY());
 		return b.getBounds().contains(e.getX(), e.getY());
 	}
 	
