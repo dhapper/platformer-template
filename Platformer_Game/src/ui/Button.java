@@ -7,9 +7,21 @@ public abstract class Button {
 	protected int xPos, yPos;
 	protected Rectangle bounds;
 	protected boolean mouseOver, mousePressed;
+	protected int imageIndex;
 	
 	protected void initBounds(int width, int height) {
 		bounds = new Rectangle(xPos, yPos, width, height);
+	}
+	
+	public void update() {
+		imageIndex = 0;
+		if(mousePressed)
+			imageIndex = 1;
+	}
+	
+	public void resetBools() {
+		mouseOver = false;
+		mousePressed = false;
 	}
 	
 	// getters and setters

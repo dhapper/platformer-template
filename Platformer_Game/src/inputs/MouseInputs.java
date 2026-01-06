@@ -31,6 +31,8 @@ private GamePanel gamePanel;
     	case PLAYING:
     		gamePanel.getGame().getPlaying().mouseMoved(e);
     		break;
+    	case LEVELS:
+    		gamePanel.getGame().getLevels().mouseMoved(e);
     	default:
     		break;
     		
@@ -54,6 +56,9 @@ private GamePanel gamePanel;
     	case PLAYING:
     		gamePanel.getGame().getPlaying().mousePressed(e);
     		break;
+    	case LEVELS:
+    		gamePanel.getGame().getLevels().mousePressed(e);
+    		break;
     	default:
     		break;
     	}
@@ -69,6 +74,9 @@ private GamePanel gamePanel;
     		break;
     	case PLAYING:
     		gamePanel.getGame().getPlaying().mouseReleased(e);
+    		break;
+    	case LEVELS:
+    		gamePanel.getGame().getLevels().mouseReleased(e);
     		break;
     	default:
     		break;

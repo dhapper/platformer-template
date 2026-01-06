@@ -37,10 +37,8 @@ public class Menu extends State implements Statemethods {
 	@Override
 	public void update() {
 		
-		for(Button b : buttons) {
-			if(b instanceof IconButton)
-				((IconButton) b).update();
-		}
+		for(Button b : buttons)
+			b.update();
 		
 	}
 
@@ -89,7 +87,7 @@ public class Menu extends State implements Statemethods {
 	
 	private void resetButtons() {
 		for(Button b : buttons)
-			b.setMouseOver(false);
+			b.resetBools();
 	}
 
 	@Override
@@ -124,7 +122,5 @@ public class Menu extends State implements Statemethods {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 
 }

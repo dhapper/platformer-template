@@ -9,13 +9,14 @@ import java.awt.image.BufferedImage;
 
 import enums.Gamestate;
 import enums.Icon;
+import graphics.ImageModifier;
 import utilz.Constants;
 import utilz.LoadSave;
 
 public class IconButton extends Button{
 
 	private Icon icon;
-	private BufferedImage image;
+	private BufferedImage[] images;
 	private int width, height;
 //	private int defaultWidth, defaultHeight;
 	
@@ -59,33 +60,33 @@ public class IconButton extends Button{
 		    default           -> path = null;
 		}
 		
-		image = LoadSave.ImportImg(path);
+		images = new BufferedImage[2];
+		images[0] = LoadSave.ImportImg(path);
+		images[1] = ImageModifier.HighlightImage(images[0]);
 	}
 	
 	public void draw(Graphics g) {
 		
 		int delta = (int) (1 * Constants.General.SCALE);
 		
-		if (!mouseOver) {
-		    g.drawImage(image, xPos, yPos, width, height, null);
-		} else {
-		    g.drawImage(image, xPos, yPos + delta, width, height, null);
-		}
-
-	
+		if (!mouseOver)
+		    g.drawImage(images[imageIndex], xPos, yPos, width, height, null);
+		else
+		    g.drawImage(images[imageIndex], xPos, yPos - delta, width, height, null);
+		
 	}
 	
-	public void update() {
-
-	}
+//	public void update() {
+//		imageIndex = 0;
+//		if(mousePressed)
+//			imageIndex = 1;
+//	}
 	
 	public void action() {
-		Gamestate.state = Gamestate.PLAYING;
-	}
-	
-	public void resetBools() {
-		mouseOver = false;
-		mousePressed = true;
+		switch (icon) {
+			case PLAY	-> Gamestate.state = Gamestate.PLAYING;
+			case LEVELS	-> Gamestate.state = Gamestate.LEVELS;
+		}
 	}
 	
 }

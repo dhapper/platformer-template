@@ -2,11 +2,10 @@ package main;
 
 import java.awt.Graphics;
 
-import entities.Player;
 import enums.Gamestate;
+import gamestates.Levels;
 import gamestates.Menu;
 import gamestates.Playing;
-import level.LevelManager;
 
 public class Game implements Runnable{
 	
@@ -18,6 +17,7 @@ public class Game implements Runnable{
 	
 	private Playing playing;
 	private Menu menu;
+	private Levels levels;
 	
 	public Game() {
 		initClasses();
@@ -32,6 +32,7 @@ public class Game implements Runnable{
 	private void initClasses() {
 		menu = new Menu(this);
 		playing = new Playing(this);
+		levels = new Levels(this);
 	}
 
 	private void startGameLoop(){
@@ -49,6 +50,9 @@ public class Game implements Runnable{
 			playing.update();
 //			gamePanel.updateGame();
 			break;
+		case LEVELS:
+			levels.update();
+			break;
 		default:
 			break;
 		}
@@ -62,6 +66,9 @@ public class Game implements Runnable{
 			break;
 		case PLAYING:
 			playing.render(g);
+			break;
+		case LEVELS:
+			levels.render(g);
 			break;
 		default:
 			break;
@@ -127,6 +134,10 @@ public class Game implements Runnable{
 	
 	public Menu getMenu() {
 		return menu;
+	}
+	
+	public Levels getLevels() {
+		return levels;
 	}
 
 }

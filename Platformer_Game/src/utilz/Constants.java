@@ -51,6 +51,13 @@ public class Constants {
 			public static final int ICON_BUTTON_HEIGHT = (int) (DEFAULT_ICON_BUTTON_HEIGHT * General.SCALE);
 		}
 		
+		public static class LEVEL_BUTTON {
+			public static final int DEFAULT_LEVEL_BUTTON_WIDTH = 19;
+			public static final int DEFAULT_LEVEL_BUTTON_HEIGHT = 17; 
+			public static final int LEVEL_BUTTON_WIDTH =  (int) (DEFAULT_LEVEL_BUTTON_WIDTH * General.SCALE);
+			public static final int LEVEL_BUTTON_HEIGHT = (int) (DEFAULT_LEVEL_BUTTON_HEIGHT * General.SCALE);
+		}
+		
 	}
 	
 	
@@ -62,6 +69,7 @@ public class Constants {
 		public static final String ENEMIES = "/Pixel Adventure Assets/Enemies/";
 		
 		public static final String MENU_BUTTONS = "/Pixel Adventure Assets/Menu/Buttons/";
+		public static final String LEVEL_BUTTONS = "/Pixel Adventure Assets/Menu/Levels/";
 	}
 	
 	

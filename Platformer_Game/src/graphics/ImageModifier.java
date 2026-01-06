@@ -25,5 +25,48 @@ public class ImageModifier {
 
         return transparentImage;
     }
+    
+    public static BufferedImage HighlightImage(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        int whiteThreshold = 200; // tweak if needed
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int argb = image.getRGB(x, y);
+
+                int a = (argb >> 24) & 0xff;
+                int r = (argb >> 16) & 0xff;
+                int g = (argb >> 8) & 0xff;
+                int b = argb & 0xff;
+
+                // Ignore fully transparent pixels
+                if (a == 0) {
+                    result.setRGB(x, y, argb);
+                    continue;
+                }
+
+                // Detect "whitish" pixels
+                if (r >= whiteThreshold && g >= whiteThreshold && b >= whiteThreshold) {
+                    // Yellow with same alpha
+                    int yellow =
+                            (a << 24) |
+                            (255 << 16) | // R
+                            (255 << 8)  | // G
+                            0;             // B
+
+                    result.setRGB(x, y, yellow);
+                } else {
+                    result.setRGB(x, y, argb);
+                }
+            }
+        }
+
+        return result;
+    }
+
 
 }

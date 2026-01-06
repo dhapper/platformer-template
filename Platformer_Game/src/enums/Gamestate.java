@@ -3,7 +3,9 @@ package enums;
 public enum Gamestate {
 	
 	PLAYING,
-	MENU;
+	MENU,
+	LEVELS
+	;
 
 	public static Gamestate state = MENU;
 }
