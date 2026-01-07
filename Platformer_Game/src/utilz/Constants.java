@@ -70,6 +70,9 @@ public class Constants {
 		
 		public static final String MENU_BUTTONS = "/Pixel Adventure Assets/Menu/Buttons/";
 		public static final String LEVEL_BUTTONS = "/Pixel Adventure Assets/Menu/Levels/";
+		
+		public static final String BLACK_TEXT = "/Pixel Adventure Assets/Menu/Text/Text (Black) (8x10).png";
+		public static final String WHITE_TEXT = "/Pixel Adventure Assets/Menu/Text/Text (White) (8x10).png";
 	}
 	
 	

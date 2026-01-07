@@ -1,36 +1,58 @@
 package gamestates;
 
 import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
+import enums.BgColour;
+import enums.Icon;
+import graphics.TextWriter;
+import graphics.TextWriter.TextColour;
 import level.LevelManager;
 import main.Game;
 import ui.Button;
 import ui.IconButton;
 import ui.LevelButton;
 import utilz.Constants;
+import utilz.LoadSave;
+import utilz.Constants.UI.RED_BUTTON;
+
+import static utilz.Constants.General.*;
+import static utilz.Constants.TileConstants.TERRAIN_TILE_SIZE;
+import static utilz.Constants.UI;;
 
 public class Levels extends State implements Statemethods{
 	
 	private Button[] buttons;
+	
+	private TextWriter textWriter;
+	private BufferedImage title;
+	private int textScale = (int) (2 * Constants.General.SCALE);
+	private int titleMarginX, titleMarginY;
+	private int verticalMargin;
 
 	public Levels(Game game) {
 		super(game);
 
 		loadButtons();
+		textWriter = new TextWriter();
+		title = textWriter.GetTextImage("Select Level", TextColour.BLACK);
+		titleMarginX = (Constants.General.SCREEN_WIDTH - title.getWidth() * textScale) / 2;
+		titleMarginY = (verticalMargin - title.getHeight() * textScale) / 2;
+		System.out.println(Constants.General.SCREEN_WIDTH + " : " + title.getWidth()  + " : " + titleMarginX);
 	}
 	
 	
 	int tester1 = 127;
 	int tester2 = 832;
-	
 	int tester3 = 130;
 	int tester4 = 445;
 	
 	private void loadButtons() {
-		buttons = new Button[50];
+		buttons = new Button[51];
 		LevelManager levelManager = game.getPlaying().getLevelManager();
 		int levelsWide = 10;
 		int levelsHigh = 5;
@@ -41,7 +63,7 @@ public class Levels extends State implements Statemethods{
 		
 		int verticalSpacing = (int) (5 * Constants.General.SCALE);
 		int levelButtonsHeight = levelsHigh * Constants.UI.LEVEL_BUTTON.LEVEL_BUTTON_HEIGHT + (levelsHigh - 1) * verticalSpacing;
-		int verticalMargin = (int) ((Constants.General.SCREEN_HEIGHT - levelButtonsHeight) / 2f);
+		verticalMargin = (int) ((Constants.General.SCREEN_HEIGHT - levelButtonsHeight) / 2f);
 		
 		System.out.println(levelButtonsWidth + " | " + Constants.General.SCREEN_WIDTH + " | " + horizontalMargin);
 		System.out.println(levelButtonsHeight + " | " + Constants.General.SCREEN_HEIGHT + " | " + verticalMargin);
@@ -55,6 +77,24 @@ public class Levels extends State implements Statemethods{
 						levelNum,
 						levelManager
 						);
+			}
+		}
+		
+		// back button
+		buttons[50] = new IconButton(
+				(int) (SCREEN_WIDTH * 0.97 - RED_BUTTON.ICON_BUTTON_WIDTH),
+				(int) (SCREEN_HEIGHT * 0.97 - RED_BUTTON.ICON_BUTTON_HEIGHT),
+				Icon.BACK);
+		
+	}
+	
+	// maybe move to static method? out of map manager too
+	// assetStore?
+	private void paintBackground(Graphics g) {
+		BufferedImage bgTile = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Green.png");
+		for(int i = 0; i < GAME_TILES_WIDE; i++) {
+			for(int j = 0; j < GAME_TILES_HIGH; j++) {
+				g.drawImage(bgTile, i * TERRAIN_TILE_SIZE, j * TERRAIN_TILE_SIZE, TERRAIN_TILE_SIZE, TERRAIN_TILE_SIZE, null);
 			}
 		}
 		
@@ -77,11 +117,14 @@ public class Levels extends State implements Statemethods{
 		g.setColor(Color.BLACK);
 		g.drawString("LEVELS", Constants.General.SCREEN_WIDTH/2, Constants.General.SCREEN_HEIGHT/2);
 		
-		g.fillRect(tester1, 0, 1, 1000);
-		g.fillRect(tester2, 0, 1, 1000);
+//		g.fillRect(tester1, 0, 1, 1000);
+//		g.fillRect(tester2, 0, 1, 1000);
+//		g.fillRect(0, tester3, 1000, 1);
+//		g.fillRect(0, tester4, 1000, 1);
 		
-		g.fillRect(0, tester3, 1000, 1);
-		g.fillRect(0, tester4, 1000, 1);
+		paintBackground(g);
+		
+		g.drawImage(title, titleMarginX, titleMarginY, title.getWidth() * textScale, title.getHeight() * textScale, null);
 	
 		for(Button b : buttons) {
 			if(b instanceof IconButton)
