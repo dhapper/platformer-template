@@ -17,7 +17,7 @@ public class IconButton extends Button{
 
 	private Icon icon;
 	private BufferedImage[] images;
-	private int width, height;
+//	private int width, height;
 //	private int defaultWidth, defaultHeight;
 	
 	// back button

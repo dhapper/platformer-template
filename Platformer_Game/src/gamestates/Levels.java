@@ -128,12 +128,8 @@ public class Levels extends State implements Statemethods{
 		
 		g.drawImage(title, titleMarginX, titleMarginY, title.getWidth() * textScale, title.getHeight() * textScale, null);
 	
-		for(Button b : buttons) {
-			if(b instanceof IconButton)
-				((IconButton) b).draw(g);
-			if(b instanceof LevelButton)
-				((LevelButton) b).draw(g);
-		}
+		for(Button b : buttons)
+			b.draw(g);
 		
 	}
 
@@ -158,10 +154,7 @@ public class Levels extends State implements Statemethods{
 		for(Button b : buttons) {
 			if(isIn(e,b)) {
 				if(b.isMousePressed()) {
-					if(b instanceof IconButton)
-						((IconButton) b).action();
-					if(b instanceof LevelButton)
-						((LevelButton) b).EnterLevel();
+					b.action();
 				break;
 				}
 			}

@@ -10,6 +10,8 @@ import enums.Icon;
 import main.Game;
 import ui.Button;
 import ui.IconButton;
+import ui.MenuButton;
+import ui.MenuButton.MenuButtonType;
 import utilz.Constants;
 
 public class Menu extends State implements Statemethods {
@@ -24,14 +26,16 @@ public class Menu extends State implements Statemethods {
 	}
 	
 	private void loadButtons() {
-		buttons = new Button[6];
+		buttons = new Button[8];
 		
 		buttons[0] = new IconButton(100, 100, Icon.PLAY);
 		buttons[1] = new IconButton(200, 100, Icon.NEXT);
 		buttons[2] = new IconButton(300, 100, Icon.BACK);
 		buttons[3] = new IconButton(400, 100, Icon.CLOSE);
 		buttons[4] = new IconButton(500, 100, Icon.LEVELS);
-		buttons[5] = new IconButton(600, 100, Icon.VOLUME);
+		buttons[5] = new MenuButton(600, 100, MenuButtonType.PLAY);
+		buttons[6] = new MenuButton(600, 200, MenuButtonType.LEVELS);
+		buttons[7] = new MenuButton(600, 300, MenuButtonType.SETTINGS);
 	}
 
 	@Override
@@ -46,11 +50,9 @@ public class Menu extends State implements Statemethods {
 	public void render(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.drawString("MENU", Constants.General.SCREEN_WIDTH/2, Constants.General.SCREEN_HEIGHT/2);
-	
-		for(Button b : buttons) {
-			if(b instanceof IconButton)
-				((IconButton) b).draw(g);
-		}
+		
+		for(Button b : buttons)
+			b.draw(g);
 	}
 
 	@Override
@@ -74,8 +76,7 @@ public class Menu extends State implements Statemethods {
 		for(Button b : buttons) {
 			if(isIn(e,b)) {
 				if(b.isMousePressed()) {
-					if(b instanceof IconButton)
-						((IconButton) b).action();
+					b.action();
 				break;
 				}
 			}

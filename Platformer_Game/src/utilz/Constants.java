@@ -58,6 +58,13 @@ public class Constants {
 			public static final int LEVEL_BUTTON_HEIGHT = (int) (DEFAULT_LEVEL_BUTTON_HEIGHT * General.SCALE);
 		}
 		
+		public static class MENU_BUTTON {
+			public static final int DEFAULT_MENU_BUTTON_WIDTH = 80;
+			public static final int DEFAULT_MENU_BUTTON_HEIGHT = 20; 
+			public static final int MENU_BUTTON_WIDTH =  (int) (DEFAULT_MENU_BUTTON_WIDTH * General.SCALE);
+			public static final int MENU_BUTTON_HEIGHT = (int) (DEFAULT_MENU_BUTTON_HEIGHT * General.SCALE);
+		}
+		
 	}
 	
 	

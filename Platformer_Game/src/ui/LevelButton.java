@@ -25,7 +25,10 @@ public class LevelButton extends Button{
 		this.levelNumber = levelNumber;
 		this.levelManager = levelManager;
 		
-		initBounds(LEVEL_BUTTON_WIDTH, LEVEL_BUTTON_HEIGHT);
+		width = LEVEL_BUTTON_WIDTH;
+		height = LEVEL_BUTTON_HEIGHT;		
+		
+		initBounds(width, height);
 		
 		loadImage();
 	}
@@ -56,7 +59,7 @@ public class LevelButton extends Button{
 //			imageIndex = 1;
 //	}
 	
-	public void EnterLevel() {
+	public void action() {
 		levelManager.loadLevel(levelNumber);
 		Gamestate.state = Gamestate.PLAYING;
 	}
