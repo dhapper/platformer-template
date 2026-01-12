@@ -20,6 +20,9 @@ public class IconButton extends Button{
 	private int width, height;
 //	private int defaultWidth, defaultHeight;
 	
+	// back button
+	private Gamestate lastState;
+	
 	public IconButton(int xPos, int yPos, Icon icon) {
 		this.xPos = xPos;
 		this.yPos = yPos;
@@ -86,7 +89,12 @@ public class IconButton extends Button{
 		switch (icon) {
 			case PLAY	-> Gamestate.state = Gamestate.PLAYING;
 			case LEVELS	-> Gamestate.state = Gamestate.LEVELS;
+			case BACK	-> Gamestate.state = lastState;
 		}
+	}
+	
+	public void setLastState(Gamestate state) {
+		lastState = state;
 	}
 	
 }

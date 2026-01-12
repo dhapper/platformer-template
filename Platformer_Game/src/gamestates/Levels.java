@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import enums.BgColour;
+import enums.Gamestate;
 import enums.Icon;
 import graphics.TextWriter;
 import graphics.TextWriter.TextColour;
@@ -85,6 +86,7 @@ public class Levels extends State implements Statemethods{
 				(int) (SCREEN_WIDTH * 0.97 - RED_BUTTON.ICON_BUTTON_WIDTH),
 				(int) (SCREEN_HEIGHT * 0.97 - RED_BUTTON.ICON_BUTTON_HEIGHT),
 				Icon.BACK);
+		((IconButton) buttons[50]).setLastState(Gamestate.MENU);
 		
 	}
 	
