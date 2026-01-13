@@ -1,7 +1,7 @@
 package level;
 
-import static utilz.Constants.TileConstants.*;
-import static utilz.Constants.General.*;
+import static utilz.Constants.TileConstants.DEFAULT_TERRAIN_TILE_SIZE;
+import static utilz.Constants.TileConstants.TERRAIN_TILE_SIZE;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import entities.AngryPig;
 import entities.Tile;
 import enums.BgColour;
+import graphics.BackgroundHelper;
 import utilz.Constants;
 import utilz.LoadSave;
 import utilz.MapLoader;
@@ -29,7 +30,6 @@ public class MapManager {
 	
 	private LevelManager levelManager;
 	
-	private BufferedImage[] backgrounds;
 	private BgColour bgColour = BgColour.PINK;
 	
 	private LevelData[] levelDataArray;
@@ -39,7 +39,7 @@ public class MapManager {
 		
 		tileSheet = LoadSave.ImportImg(Constants.ResourcePaths.TILES);
 		
-		loadBackgrounds();
+//		loadBackgrounds();
 		prepTiles();
 		initLevelData();
 	}
@@ -102,7 +102,7 @@ public class MapManager {
 	}
 	
 	public void render(Graphics g, int xLocationOffset) {
-		paintBackground(g);
+		BackgroundHelper.paintBackground(g, bgColour);
 		
 	    int rows = tileMap.length;
 	    int cols = tileMap[0].length;
@@ -131,27 +131,6 @@ public class MapManager {
 	        	}
 	        }
 	    }
-	}
-	
-	private void paintBackground(Graphics g) {
-		for(int i = 0; i < GAME_TILES_WIDE; i++) {
-			for(int j = 0; j < GAME_TILES_HIGH; j++) {
-				g.drawImage(backgrounds[bgColour.ordinal()], i * TERRAIN_TILE_SIZE, j * TERRAIN_TILE_SIZE, TERRAIN_TILE_SIZE, TERRAIN_TILE_SIZE, null);
-			}
-		}
-		
-	}
-	
-	private void loadBackgrounds() {
-		backgrounds = new BufferedImage[BgColour.values().length];
-		backgrounds[BgColour.BLUE.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Blue.png");
-		backgrounds[BgColour.BROWN.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Brown.png");
-		backgrounds[BgColour.GRAY.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Gray.png");
-		backgrounds[BgColour.GREEN.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Green.png");
-		backgrounds[BgColour.PINK.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Pink.png");
-		backgrounds[BgColour.PURPLE.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Purple.png");
-		backgrounds[BgColour.YELLOW.ordinal()] = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Yellow.png");
-		
 	}
 
 	public int[][] getMap(){

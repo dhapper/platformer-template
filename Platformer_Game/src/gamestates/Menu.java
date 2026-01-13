@@ -1,41 +1,66 @@
 package gamestates;
 
 import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
+import enums.BgColour;
 import enums.Gamestate;
-import enums.Icon;
+import graphics.BackgroundHelper;
+import graphics.TextWriter;
+import graphics.TextWriter.TextColour;
 import main.Game;
 import ui.Button;
-import ui.IconButton;
 import ui.MenuButton;
 import ui.MenuButton.MenuButtonType;
 import utilz.Constants;
 
+import static utilz.Constants.UI.MENU_BUTTON.*;
+import static utilz.Constants.General.*;
+
 public class Menu extends State implements Statemethods {
 	
 	private Button[] buttons;
+	
+	private TextWriter textWriter;
+	private BufferedImage title;
+	private int textScale = (int) (2 * Constants.General.SCALE);
+	private int titleMarginX, titleMarginY;
+	private int verticalMargin;
 
 	public Menu(Game game) {
 		super(game);
 		
 		loadButtons();
-		
+		initTitleVars();
+	}
+	
+	private void initTitleVars() {
+		textWriter = new TextWriter();
+		title = textWriter.GetTextImage("Name PlaceHolder", TextColour.BLACK);
+		titleMarginX = (Constants.General.SCREEN_WIDTH - title.getWidth() * textScale) / 2;
+		titleMarginY = (verticalMargin - title.getHeight() * textScale) / 2;
 	}
 	
 	private void loadButtons() {
-		buttons = new Button[8];
 		
-		buttons[0] = new IconButton(100, 100, Icon.PLAY);
-		buttons[1] = new IconButton(200, 100, Icon.NEXT);
-		buttons[2] = new IconButton(300, 100, Icon.BACK);
-		buttons[3] = new IconButton(400, 100, Icon.CLOSE);
-		buttons[4] = new IconButton(500, 100, Icon.LEVELS);
-		buttons[5] = new MenuButton(600, 100, MenuButtonType.PLAY);
-		buttons[6] = new MenuButton(600, 200, MenuButtonType.LEVELS);
-		buttons[7] = new MenuButton(600, 300, MenuButtonType.SETTINGS);
+		int xPos = SCREEN_WIDTH / 2 - MENU_BUTTON_WIDTH / 2;
+		
+		int ySpacer = MENU_BUTTON_HEIGHT / 2;
+		int buttonLayoutHeight = MENU_BUTTON_HEIGHT * 3 + ySpacer * 2;
+		
+		int yPos1 = SCREEN_HEIGHT / 2 - buttonLayoutHeight / 2;
+		int yPos2 = yPos1 + MENU_BUTTON_HEIGHT + ySpacer;
+		int yPos3 = yPos2 + MENU_BUTTON_HEIGHT + ySpacer;
+		verticalMargin = yPos1;
+		
+		buttons = new Button[3];
+		buttons[0] = new MenuButton(xPos, yPos1, MenuButtonType.PLAY);
+		buttons[1] = new MenuButton(xPos, yPos2, MenuButtonType.LEVELS);
+		buttons[2] = new MenuButton(xPos, yPos3, MenuButtonType.SETTINGS);
 	}
 
 	@Override
@@ -48,8 +73,9 @@ public class Menu extends State implements Statemethods {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.drawString("MENU", Constants.General.SCREEN_WIDTH/2, Constants.General.SCREEN_HEIGHT/2);
+		BackgroundHelper.paintBackground(g, BgColour.PURPLE);
+		
+		g.drawImage(title, titleMarginX, titleMarginY, title.getWidth() * textScale, title.getHeight() * textScale, null);
 		
 		for(Button b : buttons)
 			b.draw(g);

@@ -8,6 +8,8 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.Set;
 
+import enums.Gamestate;
+import graphics.ImageModifier;
 import graphics.TextWriter;
 import graphics.TextWriter.TextColour;
 
@@ -21,7 +23,6 @@ public class MenuButton extends Button {
 		SETTINGS
 	}
 	
-	private BufferedImage image;
 	private MenuButtonType menuButtonType;
 	
 	public MenuButton(int xPos, int yPos, MenuButtonType menuButtonType) {
@@ -32,16 +33,31 @@ public class MenuButton extends Button {
 		width = MENU_BUTTON_WIDTH;
 		height = MENU_BUTTON_HEIGHT;
 		
+		initBounds(width, height);
+		
 		createImage();
 	}
 	
 
 	public void draw(Graphics g) {
-		g.drawImage(image, xPos, yPos, width, height, null);
+		if (!mouseOver)
+			g.drawImage(images[imageIndex], xPos, yPos, width, height, null);
+		else
+			g.drawImage(images[imageIndex], xPos - (int) (width*0.0625), yPos - (int) (height*0.0625), (int) (width*1.125), (int) (height*1.125), null);
+	}
+	
+	public void action() {
+		switch(menuButtonType) {
+	    	case PLAY		-> Gamestate.state = Gamestate.PLAYING;
+	    	case LEVELS		-> Gamestate.state = Gamestate.LEVELS;
+	    	//case SETTINGS	-> Gamestate.state = Gamestate.SETTINGS;
+		}
 	}
 	
     public void createImage() {
-        image = new BufferedImage(
+    	images = new BufferedImage[2];
+    	
+        images[0] = new BufferedImage(
                 DEFAULT_MENU_BUTTON_WIDTH,
                 DEFAULT_MENU_BUTTON_HEIGHT,
                 BufferedImage.TYPE_INT_ARGB
@@ -84,16 +100,16 @@ public class MenuButton extends Button {
                     continue;
 
                 if (isEdge)
-                    image.setRGB(x, y, Outline.getRGB());
+                    images[0].setRGB(x, y, Outline.getRGB());
                 else
-                    image.setRGB(x, y, Background.getRGB());
+                	images[0].setRGB(x, y, Background.getRGB());
                 
                 if(extraOutlinePixels.contains(new Point(x, y)))
-                	image.setRGB(x, y, Outline.getRGB());
+                	images[0].setRGB(x, y, Outline.getRGB());
             }
         }
         
-        Graphics2D g2 = image.createGraphics();
+        Graphics2D g2 = images[0].createGraphics();
 
 	     // optional: smooth scaling
 	     g2.setRenderingHint(
@@ -105,11 +121,13 @@ public class MenuButton extends Button {
 	     TextWriter tw = new TextWriter();
 	     BufferedImage textImage = tw.GetTextImage(menuButtonType.toString(), TextColour.BLACK);
 	     
-	     int xOffset = (image.getWidth() - textImage.getWidth()) / 2;
-	     int yOffset = (image.getHeight() - textImage.getHeight()) / 2;
+	     int xOffset = (images[0].getWidth() - textImage.getWidth()) / 2;
+	     int yOffset = (images[0].getHeight() - textImage.getHeight()) / 2;
 	     g2.drawImage(textImage, xOffset, yOffset, textImage.getWidth(), textImage.getHeight(), null);
 	
 	     g2.dispose();
+	     
+	     images[1] = ImageModifier.HighlightImage(images[0]);
 
     }
 

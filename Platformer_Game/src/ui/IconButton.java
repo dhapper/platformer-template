@@ -16,11 +16,8 @@ import utilz.LoadSave;
 public class IconButton extends Button{
 
 	private Icon icon;
-	private BufferedImage[] images;
-//	private int width, height;
-//	private int defaultWidth, defaultHeight;
 	
-	// back button
+	// for back button
 	private Gamestate lastState;
 	
 	public IconButton(int xPos, int yPos, Icon icon) {
@@ -70,20 +67,12 @@ public class IconButton extends Button{
 	
 	public void draw(Graphics g) {
 		
-		int delta = (int) (1 * Constants.General.SCALE);
-		
 		if (!mouseOver)
 		    g.drawImage(images[imageIndex], xPos, yPos, width, height, null);
 		else
 		    g.drawImage(images[imageIndex], xPos, yPos - delta, width, height, null);
 		
 	}
-	
-//	public void update() {
-//		imageIndex = 0;
-//		if(mousePressed)
-//			imageIndex = 1;
-//	}
 	
 	public void action() {
 		switch (icon) {

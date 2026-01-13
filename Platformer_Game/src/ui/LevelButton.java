@@ -16,7 +16,6 @@ import static utilz.Constants.ResourcePaths.LEVEL_BUTTONS;
 public class LevelButton extends Button{
 	
 	private int levelNumber;
-	private BufferedImage[] images;
 	private LevelManager levelManager;
 	
 	public LevelButton(int xPos, int yPos, int levelNumber, LevelManager levelManager) {
@@ -43,21 +42,12 @@ public class LevelButton extends Button{
 	}
 	
 	public void draw(Graphics g) {
-		
-		int delta = (int) (1 * Constants.General.SCALE);
-		
 		if (!mouseOver)
 		    g.drawImage(images[imageIndex], xPos, yPos, LEVEL_BUTTON_WIDTH, LEVEL_BUTTON_HEIGHT, null);
 		else
 		    g.drawImage(images[imageIndex], xPos, yPos - delta, LEVEL_BUTTON_WIDTH, LEVEL_BUTTON_HEIGHT, null);
 
 	}
-	
-//	public void update() {
-//		imageIndex = 0;
-//		if(mousePressed)
-//			imageIndex = 1;
-//	}
 	
 	public void action() {
 		levelManager.loadLevel(levelNumber);

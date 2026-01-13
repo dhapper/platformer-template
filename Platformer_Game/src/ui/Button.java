@@ -3,6 +3,9 @@ package ui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+
+import utilz.Constants;
 
 public abstract class Button {
 	
@@ -11,6 +14,9 @@ public abstract class Button {
 	protected Rectangle bounds;
 	protected boolean mouseOver, mousePressed;
 	protected int imageIndex;
+	protected BufferedImage[] images;
+	
+	protected int delta = (int) (1 * Constants.General.SCALE);
 	
 	protected void initBounds(int width, int height) {
 		bounds = new Rectangle(xPos, yPos, width, height);

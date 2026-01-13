@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import enums.BgColour;
 import enums.Gamestate;
 import enums.Icon;
+import graphics.BackgroundHelper;
 import graphics.TextWriter;
 import graphics.TextWriter.TextColour;
 import level.LevelManager;
@@ -39,18 +40,16 @@ public class Levels extends State implements Statemethods{
 		super(game);
 
 		loadButtons();
+		initTitleVars();
+	}
+	
+	private void initTitleVars() {
 		textWriter = new TextWriter();
 		title = textWriter.GetTextImage("Select Level", TextColour.BLACK);
 		titleMarginX = (Constants.General.SCREEN_WIDTH - title.getWidth() * textScale) / 2;
 		titleMarginY = (verticalMargin - title.getHeight() * textScale) / 2;
-		System.out.println(Constants.General.SCREEN_WIDTH + " : " + title.getWidth()  + " : " + titleMarginX);
 	}
 	
-	
-	int tester1 = 127;
-	int tester2 = 832;
-	int tester3 = 130;
-	int tester4 = 445;
 	
 	private void loadButtons() {
 		buttons = new Button[51];
@@ -65,9 +64,6 @@ public class Levels extends State implements Statemethods{
 		int verticalSpacing = (int) (5 * Constants.General.SCALE);
 		int levelButtonsHeight = levelsHigh * Constants.UI.LEVEL_BUTTON.LEVEL_BUTTON_HEIGHT + (levelsHigh - 1) * verticalSpacing;
 		verticalMargin = (int) ((Constants.General.SCREEN_HEIGHT - levelButtonsHeight) / 2f);
-		
-		System.out.println(levelButtonsWidth + " | " + Constants.General.SCREEN_WIDTH + " | " + horizontalMargin);
-		System.out.println(levelButtonsHeight + " | " + Constants.General.SCREEN_HEIGHT + " | " + verticalMargin);
 		
 		for(int i = 0; i < levelsHigh; i++) {
 			for(int j = 0; j < levelsWide; j++) {
@@ -89,18 +85,6 @@ public class Levels extends State implements Statemethods{
 		((IconButton) buttons[50]).setLastState(Gamestate.MENU);
 		
 	}
-	
-	// maybe move to static method? out of map manager too
-	// assetStore?
-	private void paintBackground(Graphics g) {
-		BufferedImage bgTile = LoadSave.ImportImg(Constants.ResourcePaths.BACKGROUND + "Green.png");
-		for(int i = 0; i < GAME_TILES_WIDE; i++) {
-			for(int j = 0; j < GAME_TILES_HIGH; j++) {
-				g.drawImage(bgTile, i * TERRAIN_TILE_SIZE, j * TERRAIN_TILE_SIZE, TERRAIN_TILE_SIZE, TERRAIN_TILE_SIZE, null);
-			}
-		}
-		
-	}
 
 	@Override
 	public void update() {
@@ -113,18 +97,7 @@ public class Levels extends State implements Statemethods{
 	@Override
 	public void render(Graphics g) {
 		
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRect(0, 0, Constants.General.SCREEN_WIDTH, Constants.General.SCREEN_HEIGHT);
-		
-		g.setColor(Color.BLACK);
-		g.drawString("LEVELS", Constants.General.SCREEN_WIDTH/2, Constants.General.SCREEN_HEIGHT/2);
-		
-//		g.fillRect(tester1, 0, 1, 1000);
-//		g.fillRect(tester2, 0, 1, 1000);
-//		g.fillRect(0, tester3, 1000, 1);
-//		g.fillRect(0, tester4, 1000, 1);
-		
-		paintBackground(g);
+		BackgroundHelper.paintBackground(g, BgColour.GREEN);
 		
 		g.drawImage(title, titleMarginX, titleMarginY, title.getWidth() * textScale, title.getHeight() * textScale, null);
 	

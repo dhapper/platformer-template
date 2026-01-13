@@ -91,28 +91,6 @@ public class TextWriter {
 	    g.dispose(); // clean up
 	    return textImage;
 	}
-
-//	public BufferedImage GetTextImage(String text, TextColour colour) {
-//		
-//		BufferedImage textImage = null;
-//		
-//	    int totalWidth = 0;
-//	    int maxHeight = 0;
-//		
-//		Graphics g = textImage.getGraphics();
-//		
-//		String textUpperCase = text.toUpperCase();
-//
-//		for(char c : textUpperCase.toCharArray()) {
-//			if(charIndex.containsKey(c)) {
-//				int index = charIndex.get(c);
-//				BufferedImage charImage = sprites[colour.ordinal()][index];
-//
-//			}
-//		}
-//		
-//		return null;
-//	}
 	
 	private void initHashMap() {
 		charIndex = new HashMap<>();
