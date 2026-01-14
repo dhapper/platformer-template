@@ -50,7 +50,7 @@ public class MenuButton extends Button {
 		switch(menuButtonType) {
 	    	case PLAY		-> Gamestate.state = Gamestate.PLAYING;
 	    	case LEVELS		-> Gamestate.state = Gamestate.LEVELS;
-	    	//case SETTINGS	-> Gamestate.state = Gamestate.SETTINGS;
+	    	case SETTINGS	-> Gamestate.state = Gamestate.SETTINGS;
 		}
 	}
 	

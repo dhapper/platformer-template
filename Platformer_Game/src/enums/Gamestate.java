@@ -4,7 +4,8 @@ public enum Gamestate {
 	
 	PLAYING,
 	MENU,
-	LEVELS
+	LEVELS,
+	SETTINGS,
 	;
 
 	public static Gamestate state = MENU;

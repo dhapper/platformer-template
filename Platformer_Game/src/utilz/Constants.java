@@ -80,6 +80,8 @@ public class Constants {
 		
 		public static final String BLACK_TEXT = "/Pixel Adventure Assets/Menu/Text/Text (Black) (8x10).png";
 		public static final String WHITE_TEXT = "/Pixel Adventure Assets/Menu/Text/Text (White) (8x10).png";
+		
+		public static final String UI_SLIDER = "/Custom Assets/slider_ui.png";
 	}
 	
 	

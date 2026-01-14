@@ -6,6 +6,7 @@ import enums.Gamestate;
 import gamestates.Levels;
 import gamestates.Menu;
 import gamestates.Playing;
+import gamestates.Settings;
 
 public class Game implements Runnable{
 	
@@ -18,6 +19,7 @@ public class Game implements Runnable{
 	private Playing playing;
 	private Menu menu;
 	private Levels levels;
+	private Settings settings;
 	
 	public Game() {
 		initClasses();
@@ -33,6 +35,7 @@ public class Game implements Runnable{
 		menu = new Menu(this);
 		playing = new Playing(this);
 		levels = new Levels(this);
+		settings = new Settings(this);
 	}
 
 	private void startGameLoop(){
@@ -48,10 +51,12 @@ public class Game implements Runnable{
 			break;
 		case PLAYING:
 			playing.update();
-//			gamePanel.updateGame();
 			break;
 		case LEVELS:
 			levels.update();
+			break;
+		case SETTINGS:
+			settings.update();
 			break;
 		default:
 			break;
@@ -69,6 +74,9 @@ public class Game implements Runnable{
 			break;
 		case LEVELS:
 			levels.render(g);
+			break;
+		case SETTINGS:
+			settings.render(g);
 			break;
 		default:
 			break;
@@ -138,6 +146,10 @@ public class Game implements Runnable{
 	
 	public Levels getLevels() {
 		return levels;
+	}
+	
+	public Settings getSettings() {
+		return settings;
 	}
 
 }

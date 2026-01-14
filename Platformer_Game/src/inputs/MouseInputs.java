@@ -17,7 +17,22 @@ private GamePanel gamePanel;
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
+		switch(Gamestate.state) {
+    	case MENU:
+    		gamePanel.getGame().getMenu().mouseDragged(e);
+    		break;
+    	case PLAYING:
+    		gamePanel.getGame().getPlaying().mouseDragged(e);
+    		break;
+    	case LEVELS:
+    		gamePanel.getGame().getLevels().mouseDragged(e);
+    	case SETTINGS:
+    		gamePanel.getGame().getSettings().mouseDragged(e);
+    	default:
+    		break;
+    		
+    	}
 		
 	}
 
@@ -33,6 +48,8 @@ private GamePanel gamePanel;
     		break;
     	case LEVELS:
     		gamePanel.getGame().getLevels().mouseMoved(e);
+    	case SETTINGS:
+    		gamePanel.getGame().getSettings().mouseMoved(e);
     	default:
     		break;
     		
@@ -59,6 +76,9 @@ private GamePanel gamePanel;
     	case LEVELS:
     		gamePanel.getGame().getLevels().mousePressed(e);
     		break;
+    	case SETTINGS:
+    		gamePanel.getGame().getSettings().mousePressed(e);
+    		break;
     	default:
     		break;
     	}
@@ -77,6 +97,9 @@ private GamePanel gamePanel;
     		break;
     	case LEVELS:
     		gamePanel.getGame().getLevels().mouseReleased(e);
+    		break;
+    	case SETTINGS:
+    		gamePanel.getGame().getSettings().mouseReleased(e);
     		break;
     	default:
     		break;

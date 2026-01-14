@@ -1,7 +1,5 @@
 package gamestates;
 
-import java.awt.Color;
-
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -128,6 +126,12 @@ public class Menu extends State implements Statemethods {
 				break;
 			}
 		}
+		
+	}
+	
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 

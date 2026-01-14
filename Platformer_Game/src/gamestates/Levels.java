@@ -1,7 +1,5 @@
 package gamestates;
 
-import java.awt.Color;
-
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -19,12 +17,9 @@ import ui.Button;
 import ui.IconButton;
 import ui.LevelButton;
 import utilz.Constants;
-import utilz.LoadSave;
 import utilz.Constants.UI.RED_BUTTON;
 
 import static utilz.Constants.General.*;
-import static utilz.Constants.TileConstants.TERRAIN_TILE_SIZE;
-import static utilz.Constants.UI;;
 
 public class Levels extends State implements Statemethods{
 	
@@ -154,6 +149,12 @@ public class Levels extends State implements Statemethods{
 				break;
 			}
 		}
+		
+	}
+	
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 

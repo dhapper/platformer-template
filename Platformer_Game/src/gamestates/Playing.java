@@ -61,6 +61,12 @@ public class Playing extends State implements Statemethods {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
