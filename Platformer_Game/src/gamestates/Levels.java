@@ -135,7 +135,6 @@ public class Levels extends State implements Statemethods{
 	private void resetButtons() {
 		for(Button b : buttons)
 			b.resetBools();
-//			b.setMouseOver(false);
 	}
 
 	@Override

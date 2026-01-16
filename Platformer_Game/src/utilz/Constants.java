@@ -1,6 +1,5 @@
 package utilz;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class Constants {
@@ -65,6 +64,13 @@ public class Constants {
 			public static final int MENU_BUTTON_HEIGHT = (int) (DEFAULT_MENU_BUTTON_HEIGHT * General.SCALE);
 		}
 		
+		public static class CHARACTER_BUTTON {
+			public static final int DEFAULT_CHARACTER_SIZE = 32;
+			public static final int CHARACTER_SIZE =  (int) (DEFAULT_CHARACTER_SIZE * General.SCALE);
+			public static final int DEFAULT_BORDER_SIZE = 36;
+			public static final int BORDER_SIZE =  (int) (DEFAULT_BORDER_SIZE * General.SCALE);
+		}
+		
 	}
 	
 	
@@ -96,6 +102,11 @@ public class Constants {
 				public static final String FALL = "/Fall (32x32).png";
 				public static final String DOUBLE_JUMP = "/Double Jump (32x32).png";
 				public static final String WALL_JUMP = "/Wall Jump (32x32).png";
+				
+				public static final String MASK_DUDE = "Mask Dude";
+				public static final String NINJA_FROG = "Ninja Frog";
+				public static final String PINK_MAN = "Pink Man";
+				public static final String VIRTUAL_GUY = "Virtual Guy";
 			}
 			
 			public static class Enemy {

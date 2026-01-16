@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import enums.AnimState;
+import enums.Characters;
 import enums.Facing;
 import graphics.Animation;
 import graphics.AnimationConfig;
@@ -26,6 +27,7 @@ public class Player extends LivingEntity {
 	private boolean invincible = false;
 	private long invincibleEndTime = 0;   // timestamp when invincibility ends
 
+	private Characters character = Characters.NINJA_FROG;
 
 	public Player(float x, float y) {
 		super(x, y);
@@ -54,7 +56,7 @@ public class Player extends LivingEntity {
 	
     @Override
     public AnimationConfig[] getAnimationConfigs() {
-        String base = Constants.ResourcePaths.MAIN_CHARACTERS + "Ninja Frog";
+        String base = Constants.ResourcePaths.MAIN_CHARACTERS + character.getPath();
 
         return new AnimationConfig[]{
             new AnimationConfig(AnimState.IDLE, base + Paths.Player.IDLE, 11, 10),
@@ -133,6 +135,12 @@ public class Player extends LivingEntity {
 		hitbox.x = 4 * Constants.TileConstants.TERRAIN_TILE_SIZE;
 		hitbox.y = 4 * Constants.TileConstants.TERRAIN_TILE_SIZE;
 	}
+	
+	public void updateCharacter(Characters character) {
+	    this.character = character;
+	    animManager.loadAnimationsFromEntity(this);
+	}
+
 	
 	// getters and setters
 	

@@ -121,5 +121,24 @@ public class AnimationManager {
         prevState = null;
         aniTick = 0;
     }
+    
+    // fix to change skins mid game
+    public void loadAnimationsFromEntity(LivingEntity entity) {
+        AnimationDefinition def = (AnimationDefinition) entity;
+
+        anims = new Animation[AnimState.values().length];
+
+        for (AnimationConfig cfg : def.getAnimationConfigs()) {
+            anims[cfg.state.ordinal()] =
+                new Animation(cfg.path, cfg.frames, cfg.speed, 
+                              livingEntity.getSpriteWidth(), livingEntity.getSpriteHeight());
+        }
+
+        // Reset state
+        state = AnimState.IDLE;
+        prevState = null;
+        aniTick = 0;
+    }
+
 
 }

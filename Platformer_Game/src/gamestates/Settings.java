@@ -1,17 +1,28 @@
 package gamestates;
 
+import static utilz.Constants.General.SCREEN_HEIGHT;
+import static utilz.Constants.General.SCREEN_WIDTH;
+
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import entities.Player;
 import enums.BgColour;
+import enums.Characters;
+import enums.Gamestate;
+import enums.Icon;
 import graphics.BackgroundHelper;
 import graphics.TextWriter;
 import graphics.TextWriter.TextColour;
 import main.Game;
+import ui.Button;
+import ui.CharacterButton;
+import ui.IconButton;
 import ui.Slider;
 import utilz.Constants;
+import utilz.Constants.UI.RED_BUTTON;
 
 public class Settings extends State implements Statemethods{
 	
@@ -21,14 +32,22 @@ public class Settings extends State implements Statemethods{
 	private int titleMarginX, titleMarginY;
 	private int verticalMargin = (int) (Constants.General.SCREEN_HEIGHT * 0.2);
 	
+	private Player player;
+	
 	private Slider[] sliders;
+	private Button[] buttons;
+	
+	public Characters character;
 
 	public Settings(Game game) {
 		super(game);
 		
+		player = game.getPlaying().getPlayer();
+		
 		initTitleVars();
 		
 		loadUI();
+		loadButtons();
 	}
 	
 	private void loadUI() {
@@ -39,7 +58,35 @@ public class Settings extends State implements Statemethods{
 		int yPos2 = yPos1 + Constants.TileConstants.TERRAIN_TILE_SIZE * 2;
 		sliders[0] = new Slider(xPos, yPos1, "Volume:", 5, 3);
 		sliders[1] = new Slider(xPos, yPos2, "Scale:", 3, 1);
-				
+	}
+	
+	private void loadButtons() {
+		
+		int spacer = (int) (10 * Constants.General.SCALE);
+		int buttonWidth = (int) (32 * Constants.General.SCALE);
+		int totalWidth = buttonWidth * 4 + spacer * 3;
+		int xPos1 = Constants.General.SCREEN_WIDTH / 2 - totalWidth / 2;
+		int xPos2 = xPos1 + buttonWidth + spacer;
+		int xPos3 = xPos2 + buttonWidth + spacer;
+		int xPos4 = xPos3 + buttonWidth + spacer;
+		
+		buttons = new Button[5];
+		buttons[0] = new CharacterButton(xPos1, 400, Characters.MASK_DUDE);
+		buttons[1] = new CharacterButton(xPos2, 400, Characters.NINJA_FROG);
+		buttons[2] = new CharacterButton(xPos3, 400, Characters.PINK_MAN);
+		buttons[3] = new CharacterButton(xPos4, 400, Characters.VIRTUAL_GUY);
+		
+		// default active character
+		((CharacterButton) buttons[0]).setActive(true);
+		character = ((CharacterButton) buttons[0]).getCharacter();
+		player.updateCharacter(character);
+		
+		// back button
+		buttons[4] = new IconButton(
+				(int) (SCREEN_WIDTH * 0.97 - RED_BUTTON.ICON_BUTTON_WIDTH),
+				(int) (SCREEN_HEIGHT * 0.97 - RED_BUTTON.ICON_BUTTON_HEIGHT),
+				Icon.BACK);
+		((IconButton) buttons[4]).setLastState(Gamestate.MENU);
 	}
 	
 	private void initTitleVars() {
@@ -51,7 +98,9 @@ public class Settings extends State implements Statemethods{
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		
+		for(Button b : buttons)
+			b.update();
 		
 	}
 
@@ -64,6 +113,9 @@ public class Settings extends State implements Statemethods{
 		
 		for(Slider s : sliders)
 			s.draw(g);
+		
+		for(Button b : buttons)
+			b.draw(g);
 		
 	}
 
@@ -78,6 +130,12 @@ public class Settings extends State implements Statemethods{
 		for(Slider s : sliders)
 			s.mousePressed(e);
 		
+		for(Button b : buttons) {
+			if(isIn(e, b)) {
+				b.setMousePressed(true);
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -85,11 +143,47 @@ public class Settings extends State implements Statemethods{
 		for(Slider s : sliders)
 			s.mouseReleased(e);
 		
+		for(Button b : buttons) {
+			if(isIn(e,b)) {
+				if(b.isMousePressed()) {
+					
+					if(b instanceof CharacterButton) {
+						resetCharacterButtons();
+						character = ((CharacterButton) b).getCharacter();
+						player.updateCharacter(character);
+					}
+					
+					b.action();
+					break;
+				}
+			}
+		}
+		
+		resetButtons();
+	}
+	
+	private void resetButtons() {
+		for(Button b : buttons)
+			b.resetBools();
+	}
+	
+	private void resetCharacterButtons() {
+		for(Button b : buttons)
+			if(b instanceof CharacterButton)
+				((CharacterButton) b).setActive(false);
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
+		for(Button b : buttons)
+			b.setMouseOver(false);
+		
+		for(Button b : buttons) {
+			if(isIn(e, b)) {
+				b.setMouseOver(true);
+				break;
+			}
+		}
 		
 	}
 	
