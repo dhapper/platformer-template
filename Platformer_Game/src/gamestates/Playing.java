@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import entities.Player;
 import enums.Gamestate;
 import level.LevelManager;
+import main.Audio;
 import main.Game;
 
 public class Playing extends State implements Statemethods {
@@ -23,7 +24,7 @@ public class Playing extends State implements Statemethods {
 	private void initClasses() {
 		player = new Player(50, 50);
 		levelManager = new LevelManager(player);
-
+		
 	}
 
 	@Override
