@@ -10,6 +10,7 @@ import enums.Gamestate;
 import graphics.BackgroundHelper;
 import graphics.TextWriter;
 import graphics.TextWriter.TextColour;
+import main.Audio;
 import main.Game;
 import ui.Button;
 import ui.MenuButton;
@@ -34,6 +35,15 @@ public class Menu extends State implements Statemethods {
 		
 		loadButtons();
 		initTitleVars();
+		
+		initAudio();
+		background.loop(-20);
+	}
+	
+	public void initAudio() {
+		String filepath = "res/game_music/Sketchbook 2025-12-11_INTRO.wav";
+		background = new Audio(filepath);
+//		background.loop(-20);
 	}
 	
 	private void initTitleVars() {

@@ -36,7 +36,7 @@ public class Audio {
 				AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
 				clip = AudioSystem.getClip();
 				clip.open(audioInput);
-				clip.start();
+//				clip.start();
 			}else {
 				System.out.println("Can't find file");
 			}	

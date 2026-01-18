@@ -2,12 +2,16 @@ package gamestates;
 
 import java.awt.event.MouseEvent;
 
+import main.Audio;
 import main.Game;
 import ui.Button;
 
 public class State {
 	
 	protected Game game;
+	
+	protected boolean active;
+	protected Audio background;
 	
 	public State(Game game) {
 		this.game = game;
@@ -19,6 +23,14 @@ public class State {
 	
 	public Game getGame() {
 		return game;
+	}
+	
+	public void enterState() {
+		background.loop(-20f);
+	}
+	
+	public void exitState() {
+		background.stop();
 	}
 
 }

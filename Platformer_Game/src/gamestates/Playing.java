@@ -25,6 +25,12 @@ public class Playing extends State implements Statemethods {
 		player = new Player(50, 50);
 		levelManager = new LevelManager(player);
 		
+		initAudio();
+	}
+	
+	public void initAudio() {
+		String filepath = "res/game_music/Sketchbook 2025-11-12.wav";
+		background = new Audio(filepath);
 	}
 
 	@Override

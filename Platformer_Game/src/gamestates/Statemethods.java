@@ -9,6 +9,8 @@ public interface Statemethods {
 	public void update();
 	public void render(Graphics g);
 	
+//	public void initAudio();
+	
 	public void mouseClicked(MouseEvent e);
 	public void mousePressed(MouseEvent e);
 	public void mouseReleased(MouseEvent e);

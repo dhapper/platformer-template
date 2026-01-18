@@ -7,6 +7,7 @@ import gamestates.Levels;
 import gamestates.Menu;
 import gamestates.Playing;
 import gamestates.Settings;
+import gamestates.StateSwitchManager;
 
 public class Game implements Runnable{
 	
@@ -20,6 +21,8 @@ public class Game implements Runnable{
 	private Menu menu;
 	private Levels levels;
 	private Settings settings;
+	
+	private StateSwitchManager stateSwitchManager;
 	
 	public Game() {
 		initClasses();
@@ -36,6 +39,8 @@ public class Game implements Runnable{
 		playing = new Playing(this);
 		levels = new Levels(this);
 		settings = new Settings(this);
+		
+		stateSwitchManager = new StateSwitchManager(playing, menu, levels, settings);
 	}
 
 	private void startGameLoop(){
@@ -62,6 +67,8 @@ public class Game implements Runnable{
 			break;
 		}
 		
+		// currently manages audio switches
+		stateSwitchManager.update();
 	}
 	
 	public void render(Graphics g) {
