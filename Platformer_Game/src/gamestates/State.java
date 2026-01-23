@@ -26,7 +26,7 @@ public class State {
 	}
 	
 	public void enterState() {
-		background.loop(-20f);
+		background.loop(game.getSettings().getVolumeSelection());
 	}
 	
 	public void exitState() {

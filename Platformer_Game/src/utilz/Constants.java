@@ -11,6 +11,7 @@ public class Constants {
 		public static final int GAME_TILES_HIGH = 12;
 		public static final int SCREEN_WIDTH = GAME_TILES_WIDE * TileConstants.TERRAIN_TILE_SIZE;
 		public static final int SCREEN_HEIGHT = GAME_TILES_HIGH * TileConstants.TERRAIN_TILE_SIZE;
+		public static final int DEFAULT_VOLUME = 2;
 	}
 	
 	public static class Directions {

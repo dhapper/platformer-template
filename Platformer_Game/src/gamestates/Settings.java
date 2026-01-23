@@ -37,7 +37,10 @@ public class Settings extends State implements Statemethods{
 	private Slider[] sliders;
 	private Button[] buttons;
 	
-	public Characters character;
+	private Characters character;
+	
+	private final int volumeNotches = 5;
+	private int volumeSelection = Constants.General.DEFAULT_VOLUME;
 
 	public Settings(Game game) {
 		super(game);
@@ -56,7 +59,7 @@ public class Settings extends State implements Statemethods{
 		int xPos = (int) (Constants.General.SCREEN_WIDTH * 0.33);
 		int yPos1 = (int) (Constants.General.SCREEN_HEIGHT * 0.3);
 		int yPos2 = yPos1 + Constants.TileConstants.TERRAIN_TILE_SIZE * 2;
-		sliders[0] = new Slider(xPos, yPos1, "Volume:", 5, 3);
+		sliders[0] = new Slider(xPos, yPos1, "Volume:", volumeNotches, volumeSelection);
 		sliders[1] = new Slider(xPos, yPos2, "Scale:", 3, 1);
 	}
 	
@@ -102,6 +105,10 @@ public class Settings extends State implements Statemethods{
 		for(Button b : buttons)
 			b.update();
 		
+		int currentVolumeSelection = sliders[0].getCurrentNotch();
+		if(volumeSelection != currentVolumeSelection)
+			game.getMenu().background.setVolume(currentVolumeSelection);
+		volumeSelection = currentVolumeSelection;
 	}
 
 	@Override
@@ -205,5 +212,13 @@ public class Settings extends State implements Statemethods{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	// getters and setters
+	
+	public int getVolumeSelection() {
+		return volumeSelection;
+	}
+	
+
 
 }

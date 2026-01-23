@@ -37,13 +37,12 @@ public class Menu extends State implements Statemethods {
 		initTitleVars();
 		
 		initAudio();
-		background.loop(-20);
+		background.loop(Constants.General.DEFAULT_VOLUME);
 	}
 	
 	public void initAudio() {
 		String filepath = "res/game_music/Sketchbook 2025-12-11_INTRO.wav";
 		background = new Audio(filepath);
-//		background.loop(-20);
 	}
 	
 	private void initTitleVars() {

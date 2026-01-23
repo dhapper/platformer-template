@@ -122,5 +122,11 @@ public class Slider {
 			updatePos(e.getX());
 		}
 	}
+	
+	// getters and setters
+	
+	public int getCurrentNotch() {
+		return currentNotch;
+	}
 
 }

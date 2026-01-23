@@ -10,11 +10,11 @@ import javax.sound.sampled.FloatControl;
 public class Audio {
 	
 	/*
-	 *  0.0f     Full volume
-	 * -5.0f     Slightly quieter
-	 * -10.0f    Good background music
-	 * -20.0f    Very quiet
-	 * -80.0f    Off
+	 * 5 = 0.0f     Full volume
+	 * 4 = -5.0f     Slightly quieter
+	 * 3 = -10.0f    Good background music
+	 * 2 = -20.0f    Very quiet
+	 * 1 = -80.0f    Off
 	 */
 	
 	private Clip clip;
@@ -45,7 +45,7 @@ public class Audio {
 		}
 	}
 	
-	public void loop(float volume) {
+	public void loop(int volume) {
 		if (clip == null) return;
 		
 		setVolume(volume);
@@ -62,11 +62,20 @@ public class Audio {
 	}
 
 	
-    public void setVolume(float volume) {
+    public void setVolume(int volume) {
         if (clip == null) return;
+        
+        float gainControl = 0;
+        switch(volume) {
+        case 1 -> gainControl = -80f;
+        case 2 -> gainControl = -20f;
+        case 3 -> gainControl = -10f;
+        case 4 -> gainControl = -5f;
+        case 5 -> gainControl = 0f;
+        }
 
         FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        gain.setValue(volume);
+        gain.setValue(gainControl);
     }
 
 }
