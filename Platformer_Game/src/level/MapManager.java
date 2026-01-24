@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import entities.AngryPig;
+import entities.Chicken;
 import entities.Tile;
 import enums.BgColour;
 import graphics.BackgroundHelper;
@@ -94,8 +95,14 @@ public class MapManager {
 	        	if(enemyMap[j][i] == 1) {
 	        		AngryPig ap = new AngryPig(TERRAIN_TILE_SIZE * i, TERRAIN_TILE_SIZE * j);
 	        		ap.importLevelManager(levelManager);
+	        		ap.importPlayer(levelManager.getPlayer());
+	        		Chicken c = new Chicken(TERRAIN_TILE_SIZE * (i + 2) , TERRAIN_TILE_SIZE * (j - 2));
+	        		c.importLevelManager(levelManager);
+	        		c.importPlayer(levelManager.getPlayer());
 	        		levelManager.addEntityToList(levelManager.getEntities(), ap);
 	        		levelManager.addEntityToList(levelManager.getEnemies(), ap);
+	        		levelManager.addEntityToList(levelManager.getEntities(), c);
+	        		levelManager.addEntityToList(levelManager.getEnemies(), c);
 	        	}
 	        }
 	    }

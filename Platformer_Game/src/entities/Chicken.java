@@ -1,5 +1,12 @@
 package entities;
 
+import static utilz.Constants.CharacterAnimations.Paths.Enemy.*;
+import static utilz.Constants.General.SCALE;
+
+import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+
 import enums.AnimState;
 import enums.Facing;
 import graphics.Animation;
@@ -8,16 +15,9 @@ import level.LevelManager;
 import systems.EnemyMovement;
 import utilz.Constants;
 
-import static utilz.Constants.CharacterAnimations.Paths.Enemy.*;
-import static utilz.Constants.General.SCALE;
+public class Chicken extends LivingEntity{
 
-import java.awt.Graphics;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-
-public class AngryPig extends LivingEntity{
-
-	public AngryPig(float x, float y) {
+	public Chicken(float x, float y) {
 		super(x, y);
 		
 		init();
@@ -29,21 +29,21 @@ public class AngryPig extends LivingEntity{
 	}
 	
 	private void init() {
-		endPath = "AngryPig";
-		pixelSpec = PixelSpec.PX_36_X_30;
+		endPath = "Chicken";
+		pixelSpec = PixelSpec.PX_32_X_34;
 		
-		spriteWidth = 36;
-		spriteHeight = 30;
+		spriteWidth = 32;
+		spriteHeight = 34;
 		
-		xDrawOffset = (int) (SCALE * 6);
-		yDrawOffset = (int) (SCALE * 4);
-		hitboxWidth = (int) (SCALE * 24);
-		hitboxHeight = (int) (SCALE * 25);
+		xDrawOffset = (int) (SCALE * 2);
+		yDrawOffset = (int) (SCALE * 9);
+		hitboxWidth = (int) (SCALE * 28);
+		hitboxHeight = (int) (SCALE * 24);
 		
-		speed = 0.2f * SCALE;
+		speed = 0.5f * SCALE;
 		jump = -1.5f * SCALE;
 		doubleJump = -1f * SCALE;
-		gravity = 0.0025f * SCALE;
+		gravity = 0.001f * SCALE;
 		maxFallSpeed = 0.75f * SCALE;
 		
 		facing = Facing.LEFT;
@@ -55,17 +55,16 @@ public class AngryPig extends LivingEntity{
         String base = Constants.ResourcePaths.ENEMIES + endPath;
 
         return new AnimationConfig[]{
-            new AnimationConfig(AnimState.IDLE, base + IDLE + pixelSpec, 9, 10),
-            new AnimationConfig(AnimState.RUN, base + RUN + pixelSpec, 12, 10),
-            new AnimationConfig(AnimState.WALK, base + WALK + pixelSpec, 16, 10),
-            new AnimationConfig(AnimState.HIT_1, base + HIT_1 + pixelSpec, 5, 10)
+            new AnimationConfig(AnimState.IDLE, base + IDLE + pixelSpec, 13, 10),
+            new AnimationConfig(AnimState.RUN, base + RUN + pixelSpec, 14, 10),
+            new AnimationConfig(AnimState.HIT, base + HIT + pixelSpec, 5, 10)
         };
     }
     
 	public void update() {
 		physics.update(hitbox, levelManager.getEntities());
 		
-		enemyMovement.standardWalking();
+		enemyMovement.followPlayer();
 		
 		animManager.updateEnemy();
 		
@@ -77,13 +76,31 @@ public class AngryPig extends LivingEntity{
     public void chooseState() {
         
     	if(hurt) {
-    		animManager.changeState(AnimState.HIT_1);
+    		animManager.changeState(AnimState.HIT);
     		if (!animManager.getCurrentAnimation().isAnimationEnded()) return;
     		else hurt = false;
     	}
     	
-        // Default Walk
-    	animManager.changeState(AnimState.WALK);
+    	// if player in vision, run towards
+    	float visionWidth = Constants.TileConstants.TERRAIN_TILE_SIZE * 10;
+    	vision = new Rectangle2D.Float(
+    			hitbox.x + hitbox.width / 2 - visionWidth / 2,
+    			hitbox.y,
+    			visionWidth,
+    			hitboxHeight
+    			);
+    	
+    	if(vision.intersects(player.getHitbox()) && !hitbox.intersects(player.getHitbox())) {
+    		playerInVision = true;
+    		animManager.changeState(AnimState.RUN);
+    		return;
+    	} else {
+    		playerInVision = false;
+    	}
+    	
+    	// idle on default
+    	animManager.changeState(AnimState.IDLE);
+    	
     }
 	
 	public void render(Graphics g, int xLocationOffset) {
@@ -106,7 +123,11 @@ public class AngryPig extends LivingEntity{
         );
 	    }
 
-	    if (LevelManager.SHOW_HITBOXES) { drawHitbox(g, xLocationOffset); }
+	    if (LevelManager.SHOW_HITBOXES) {
+	    	drawHitbox(g, xLocationOffset);
+	    	if(vision != null)
+	    		g.drawRect((int) (vision.x - xLocationOffset), (int) vision.y, (int) vision.width, (int) vision.height);
+	    }
 	}
 	
 	public void jumpedOn() {
@@ -115,7 +136,7 @@ public class AngryPig extends LivingEntity{
 		Rectangle2D.Float enemyHead = new Rectangle2D.Float(hitbox.x, hitbox.y - 1, hitbox.width, 1);
 		if(playerFoot.intersects(enemyHead)) {
 			player.getMovement().enemyBounce();
-			animManager.triggerSingleCycle(AnimState.HIT_1);
+			animManager.triggerSingleCycle(AnimState.HIT);
 			hurt = true;
 		}
 	}
@@ -131,3 +152,4 @@ public class AngryPig extends LivingEntity{
 	
 
 }
+

@@ -39,7 +39,8 @@ public class AnimationManager {
     }
     
     public void updateEnemy() {
-    	chooseEnemyState();
+//    	chooseEnemyState();
+    	livingEntity.chooseState();
     	tickAnimation();
     }
 
@@ -52,20 +53,6 @@ public class AnimationManager {
     	prevState = state;
     	state = newState;
     }
-    
-    public void chooseEnemyState() {
-       
-    	if(livingEntity.isHurt()) {
-    		changeState(AnimState.HIT_1);
-    		if (!getCurrentAnimation().isAnimationEnded()) return;
-    		else livingEntity.setHurt(false);
-    	}
-    	
-        // Default Walk
-        changeState(AnimState.WALK);
-    }
-    
-    
 
     public void choosePlayerState() {
         // HIT lock
@@ -111,7 +98,7 @@ public class AnimationManager {
         }
     }
 
-    private void changeState(AnimState newState) {
+    public void changeState(AnimState newState) {
         if (state != newState) state = newState;
     }
 

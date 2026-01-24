@@ -33,66 +33,66 @@ public class Movement {
 		this.physics = livingEntity.getPhysics();
 	}
 	
-	public void updateEnemyPos() {
-		Rectangle2D.Float hitbox = livingEntity.getHitbox();
-		ArrayList<Entity> entities = livingEntity.getLevelManager().getEntities();
-		
-	    float newX = hitbox.x;
-	    float newY = hitbox.y;
-	    
-	    // --------------------------
-	    // VERTICAL MOVEMENT (gravity)
-	    // --------------------------
-
-	    // Predict future fall position
-	    Rectangle2D.Float futureY =
-	            new Rectangle2D.Float(hitbox.x, hitbox.y + physics.getVelY(), hitbox.width, hitbox.height);
-
-	    if (HelperMethods.CanMoveHere(futureY, entities, livingEntity)) {
-	        newY += physics.getVelY();
-	    } else {
-	        // Collision -> stop falling
-	    	physics.setVelY(0);
-	    	physics.setOnGround(true);
-	    }
-	    
-	    if(!physics.isOnGround() || livingEntity.isHurt()) {
-	    	hitbox.y = newY;
-	    	return;
-	    }
-	    
-	    // --------------------------
-	    // HORIZONTAL MOVEMENT
-	    // --------------------------
-	
-	    
-	    Rectangle2D.Float future;
-	    if(livingEntity.getFacing() == Facing.LEFT) {
-	        future = new Rectangle2D.Float(hitbox.x - speed, hitbox.y, hitbox.width, hitbox.height);
-	        if (HelperMethods.CanMoveHere(future, entities, livingEntity))
-	            newX -= speed;
-	    }else {
-	        future = new Rectangle2D.Float(hitbox.x + speed, hitbox.y, hitbox.width, hitbox.height);
-	        if (HelperMethods.CanMoveHere(future, entities, livingEntity))
-	            newX += speed;
-	    }
-	    
-	    boolean turn = HelperMethods.ShouldTurn(hitbox, entities, livingEntity)
-	    		 || !HelperMethods.CanMoveHere(future, livingEntity.getLevelManager().getEnemies(), livingEntity)
-	    		 || !HelperMethods.CanMoveHere(future, livingEntity.getLevelManager().getTiles(), livingEntity);
-	    
-	    if(turn && livingEntity.getFacing() == Facing.LEFT) {
-	    	livingEntity.setFacing(Facing.RIGHT);
-	    }else if(turn && livingEntity.getFacing() == Facing.RIGHT) {
-	    	livingEntity.setFacing(Facing.LEFT);
-	    }
-
-	    // --------------------------
-	    // APPLY MOVEMENT
-	    // --------------------------
-	    hitbox.x = newX;
-	    hitbox.y = newY;
-	}
+//	public void updateEnemyPos() {
+//		Rectangle2D.Float hitbox = livingEntity.getHitbox();
+//		ArrayList<Entity> entities = livingEntity.getLevelManager().getEntities();
+//		
+//	    float newX = hitbox.x;
+//	    float newY = hitbox.y;
+//	    
+//	    // --------------------------
+//	    // VERTICAL MOVEMENT (gravity)
+//	    // --------------------------
+//
+//	    // Predict future fall position
+//	    Rectangle2D.Float futureY =
+//	            new Rectangle2D.Float(hitbox.x, hitbox.y + physics.getVelY(), hitbox.width, hitbox.height);
+//
+//	    if (HelperMethods.CanMoveHere(futureY, entities, livingEntity)) {
+//	        newY += physics.getVelY();
+//	    } else {
+//	        // Collision -> stop falling
+//	    	physics.setVelY(0);
+//	    	physics.setOnGround(true);
+//	    }
+//	    
+//	    if(!physics.isOnGround() || livingEntity.isHurt()) {
+//	    	hitbox.y = newY;
+//	    	return;
+//	    }
+//	    
+//	    // --------------------------
+//	    // HORIZONTAL MOVEMENT
+//	    // --------------------------
+//	
+//	    
+//	    Rectangle2D.Float future;
+//	    if(livingEntity.getFacing() == Facing.LEFT) {
+//	        future = new Rectangle2D.Float(hitbox.x - speed, hitbox.y, hitbox.width, hitbox.height);
+//	        if (HelperMethods.CanMoveHere(future, entities, livingEntity))
+//	            newX -= speed;
+//	    }else {
+//	        future = new Rectangle2D.Float(hitbox.x + speed, hitbox.y, hitbox.width, hitbox.height);
+//	        if (HelperMethods.CanMoveHere(future, entities, livingEntity))
+//	            newX += speed;
+//	    }
+//	    
+//	    boolean turn = HelperMethods.ShouldTurn(hitbox, entities, livingEntity)
+//	    		 || !HelperMethods.CanMoveHere(future, livingEntity.getLevelManager().getEnemies(), livingEntity)
+//	    		 || !HelperMethods.CanMoveHere(future, livingEntity.getLevelManager().getTiles(), livingEntity);
+//	    
+//	    if(turn && livingEntity.getFacing() == Facing.LEFT) {
+//	    	livingEntity.setFacing(Facing.RIGHT);
+//	    }else if(turn && livingEntity.getFacing() == Facing.RIGHT) {
+//	    	livingEntity.setFacing(Facing.LEFT);
+//	    }
+//
+//	    // --------------------------
+//	    // APPLY MOVEMENT
+//	    // --------------------------
+//	    hitbox.x = newX;
+//	    hitbox.y = newY;
+//	}
 
 	public void updatePos(boolean leftPressed, boolean rightPressed) {
 		
@@ -183,6 +183,8 @@ public class Movement {
 		}
 	}
 	
+	// getters and setters
+	
 	public boolean isDoubleJumpUsed() {
 		return doubleJumpUsed;
 	}
@@ -193,6 +195,18 @@ public class Movement {
 	
 	public boolean isDoubleJumpTriggered() {
 		return doubleJumpTriggered;
+	}
+	
+	public Physics getPhysics() {
+		return physics;
+	}
+	
+	public LivingEntity getLivingEntity() {
+		return livingEntity;
+	}
+	
+	public float getSpeed() {
+		return speed;
 	}
 	
 }

@@ -11,7 +11,7 @@ public class Constants {
 		public static final int GAME_TILES_HIGH = 12;
 		public static final int SCREEN_WIDTH = GAME_TILES_WIDE * TileConstants.TERRAIN_TILE_SIZE;
 		public static final int SCREEN_HEIGHT = GAME_TILES_HIGH * TileConstants.TERRAIN_TILE_SIZE;
-		public static final int DEFAULT_VOLUME = 2;
+		public static final int DEFAULT_VOLUME = 1;
 	}
 	
 	public static class Directions {
@@ -111,11 +111,17 @@ public class Constants {
 			}
 			
 			public static class Enemy {
-					public static final String WALK = "/Walk (36x30).png";
-					public static final String IDLE = "/Idle (36x30).png";
-					public static final String RUN = "/Run (36x30).png";
-					public static final String HIT_1 = "/Hit 1 (36x30).png";
-					public static final String HIT_2 = "/Hit 2 (36x30).png";
+					public static final String WALK = "/Walk";
+					public static final String IDLE = "/Idle";
+					public static final String RUN = "/Run";
+					public static final String HIT = "/Hit";
+					public static final String HIT_1 = "/Hit 1";
+					public static final String HIT_2 = "/Hit 2";
+					
+					public static class PixelSpec {
+						public static final String PX_32_X_34 = " (32x34).png";
+						public static final String PX_36_X_30 = " (36x30).png";
+					}
 			}
 		}		
 		

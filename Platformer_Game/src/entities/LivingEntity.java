@@ -1,13 +1,12 @@
 package entities;
 
-import static utilz.Constants.General.SCALE;
-
-import java.util.ArrayList;
+import java.awt.geom.Rectangle2D;
 
 import enums.Facing;
 import graphics.AnimationDefinition;
 import graphics.AnimationManager;
 import level.LevelManager;
+import systems.EnemyMovement;
 import systems.Movement;
 import systems.Physics;
 import utilz.Constants;
@@ -33,12 +32,18 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 	
 	protected Physics physics;
 	protected Movement movement;
+	protected EnemyMovement enemyMovement;
 	protected AnimationManager animManager;
 	protected LevelManager levelManager;
 	
 	protected boolean invincible = false;
 	protected boolean hurt = false;
-
+	
+	// enemy vars
+	protected Player player;
+	protected Rectangle2D.Float vision;
+	protected boolean playerInVision;
+	protected String endPath, pixelSpec;
 	
 	public LivingEntity(float x, float y) {
 		super(x, y);
@@ -61,6 +66,14 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 	public void setPosByTile(int x, int y){
 		hitbox.x = x * Constants.TileConstants.TERRAIN_TILE_SIZE;
 		hitbox.y = y * Constants.TileConstants.TERRAIN_TILE_SIZE;
+	}
+	
+	public void chooseState() {
+		System.out.println("Choose State Unimplemented: " + getClass().getSimpleName());
+	}
+	
+	public void importPlayer(Player player) {
+		this.player = player;
 	}
 	
 	// getters and setters
@@ -108,6 +121,14 @@ public abstract class LivingEntity extends Entity implements AnimationDefinition
 	
 	public void setHurt(boolean hurt) {
 		this.hurt = hurt;
+	}
+	
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public boolean isPlayerInVision() {
+		return playerInVision;
 	}
 
 }
