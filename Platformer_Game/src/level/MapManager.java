@@ -2,12 +2,14 @@ package level;
 
 import static utilz.Constants.TileConstants.DEFAULT_TERRAIN_TILE_SIZE;
 import static utilz.Constants.TileConstants.TERRAIN_TILE_SIZE;
+import static utilz.Constants.EnemyIDs.*;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import entities.AngryPig;
 import entities.Chicken;
+import entities.LivingEntity;
 import entities.Tile;
 import enums.BgColour;
 import graphics.BackgroundHelper;
@@ -17,9 +19,8 @@ import utilz.MapLoader;
 
 public class MapManager {
 	
-	// 22x11 tile sheet
-	private int sheetTilesWide = 22;
-	private int sheetTilesLong = 11;
+	private int sheetTilesWide;
+	private int sheetTilesLong;
 	
 	private BufferedImage tileSheet;
 	private BufferedImage[] tiles;
@@ -39,6 +40,9 @@ public class MapManager {
 		this.levelManager = levelManager;
 		
 		tileSheet = LoadSave.ImportImg(Constants.ResourcePaths.TILES);
+		sheetTilesWide = tileSheet.getWidth() / Constants.TileConstants.DEFAULT_TERRAIN_TILE_SIZE;
+		sheetTilesLong = tileSheet.getHeight() / Constants.TileConstants.DEFAULT_TERRAIN_TILE_SIZE;
+//		System.out.println(sheetTilesWide + " " + sheetTilesLong);
 		
 //		loadBackgrounds();
 		prepTiles();
@@ -46,9 +50,11 @@ public class MapManager {
 	}
 	
 	private void initLevelData(){
-		levelDataArray = new LevelData[5];
+		levelDataArray = new LevelData[50];
 		levelDataArray[3] = new LevelData(4, 4, BgColour.BLUE);
 		levelDataArray[4] = new LevelData(4, 4, BgColour.PINK);
+		levelDataArray[5] = new LevelData(4, 4, BgColour.PINK);
+		levelDataArray[6] = new LevelData(4, 4, BgColour.GRAY);
 	}
 	
 	public void loadLevel(int level) {
@@ -92,17 +98,20 @@ public class MapManager {
 	    int cols = map[0].length;
 	    for (int j = 0; j < rows; j++) {
 	        for (int i = 0; i < cols; i++) {
-	        	if(enemyMap[j][i] == 1) {
-	        		AngryPig ap = new AngryPig(TERRAIN_TILE_SIZE * i, TERRAIN_TILE_SIZE * j);
-	        		ap.importLevelManager(levelManager);
-	        		ap.importPlayer(levelManager.getPlayer());
-	        		Chicken c = new Chicken(TERRAIN_TILE_SIZE * (i + 2) , TERRAIN_TILE_SIZE * (j - 2));
-	        		c.importLevelManager(levelManager);
-	        		c.importPlayer(levelManager.getPlayer());
-	        		levelManager.addEntityToList(levelManager.getEntities(), ap);
-	        		levelManager.addEntityToList(levelManager.getEnemies(), ap);
-	        		levelManager.addEntityToList(levelManager.getEntities(), c);
-	        		levelManager.addEntityToList(levelManager.getEnemies(), c);
+	        	if(enemyMap[j][i] != -1) {
+	        		
+	        		LivingEntity enemy = null;
+	        		
+	        		switch (enemyMap[j][i]) {
+		        	    case ANGRY_PIG	-> enemy = new AngryPig(TERRAIN_TILE_SIZE * i, TERRAIN_TILE_SIZE * j);
+		        	    case CHICKEN	-> enemy = new Chicken(TERRAIN_TILE_SIZE * i, TERRAIN_TILE_SIZE * j);
+	        		}
+	        		
+	        		enemy.importLevelManager(levelManager);
+	        		enemy.importPlayer(levelManager.getPlayer());
+	        		levelManager.addEntityToList(levelManager.getEntities(), enemy);
+	        		levelManager.addEntityToList(levelManager.getEnemies(), enemy);
+	        		
 	        	}
 	        }
 	    }

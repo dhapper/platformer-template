@@ -77,7 +77,7 @@ public class Constants {
 	
 	public static class ResourcePaths {
 		public static final String MAIN_CHARACTERS = "/Pixel Adventure Assets/Main Characters/";
-		public static final String TILES = "/Pixel Adventure Assets/Terrain/Terrain (16x16).png";
+		public static final String TILES = "/Pixel Adventure Assets/Terrain/Terrain (16x16) - custom v1.png";
 		public static final String BACKGROUND = "/Pixel Adventure Assets/Background/";
 		
 		public static final String ENEMIES = "/Pixel Adventure Assets/Enemies/";
@@ -89,6 +89,11 @@ public class Constants {
 		public static final String WHITE_TEXT = "/Pixel Adventure Assets/Menu/Text/Text (White) (8x10).png";
 		
 		public static final String UI_SLIDER = "/Custom Assets/slider_ui.png";
+	}
+	
+	public static class EnemyIDs {
+	    public static final int ANGRY_PIG = 0;
+	    public static final int CHICKEN = 1;
 	}
 	
 	

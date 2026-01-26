@@ -46,8 +46,8 @@ public class Player extends LivingEntity {
 		hitboxHeight = (int) (SCALE * 23);
 		
 		speed = 0.5f * SCALE;
-		jump = -1.5f * SCALE;
-		doubleJump = -1f * SCALE;
+		jump = -1.75f * SCALE;
+		doubleJump = -1.25f * SCALE;
 		gravity = 0.025f * SCALE;
 		maxFallSpeed = 0.75f * SCALE;
 		
